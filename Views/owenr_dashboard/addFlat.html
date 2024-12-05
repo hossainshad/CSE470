@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Flat</title>
+    <link rel="stylesheet" href="addFlat.css">
+</head>
+<body>
+    <div class="sidebar">
+        <h2>USER</h2>
+        <button onclick="window.location.href='maintenance.html';">See Maintenance Request</button>
+        <button onclick="window.location.href='rent.html';">See Rent Request</button>
+        <button onclick="window.location.href='property.html';">Return to Homepage</button>
+        <button onclick="window.location.href='logout.html';">Logout</button>
+    </div>
+    <div class="main">
+        <h1>Add a New Flat</h1>
+        <form action="submit_flat.php" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="flat-number">Flat Number:</label>
+                <input type="text" id="flat-number" name="flat_number" required>
+            </div>
+
+            <div class="form-group">
+                <label for="beds">Number of Beds:</label>
+                <input type="number" id="beds" name="beds" required>
+            </div>
+
+            <div class="form-group">
+                <label for="baths">Number of Baths:</label>
+                <input type="number" id="baths" name="baths" required>
+            </div>
+
+            <div class="form-group">
+                <label for="area">Flat Total Area (sq. ft):</label>
+                <input type="number" id="area" name="area" required>
+            </div>
+
+            <div class="form-group">
+                <label for="rent">Rent:</label>
+                <input type="number" id="rent" name="rent" required>
+            </div>
+
+            <div class="form-group">
+                <label for="floor-number">Floor Number:</label>
+                <input type="number" id="floor-number" name="floor_number" required>
+            </div>
+
+            <div class="form-group">
+                <label for="additional-info">Additional Info:</label>
+                <textarea id="additional-info" name="additional_info"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="flat-image">Upload Flat Image:</label>
+                <input type="file" id="flat-image" name="flat_image" accept="image/*" required>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="submit-btn">Add Flat</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

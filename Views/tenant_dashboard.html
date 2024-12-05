@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tenant Dashboard</title>
+</head>
+<body>
+    <header>
+        <h1>Tenant Dashboard</h1>
+    </header>
+
+    <main>
+        <!-- Flat Information Section -->
+        <section id="flat-info">
+            <h2>Flat Information</h2>
+            <p><strong>Flat Number:</strong> 101</p>
+            <p><strong>Address:</strong> 123 Naruto Street, Hidden Leaf City</p>
+            <h3>Owner Information</h3>
+            <p><strong>Name:</strong> Lionel Messi</p>
+            <p><strong>Contact:</strong> +8801744545445</p>
+            <p><strong>Email:</strong> gamaboto@gmail.com</p>
+        </section>
+
+        <!-- Payment Section -->
+        <section id="payment">
+            <h2>Payment</h2>
+            <form action="/process-payment" method="POST">
+                <label for="amount">Amount:</label>
+                <input type="number" id="amount" name="amount" required>
+
+                <button type="submit">Pay Now</button>
+            </form>
+        </section>
+
+        <!-- Maintenance Request Section -->
+        <section id="maintenance-request">
+            <h2>Maintenance Request</h2>
+            <form action="/submit-maintenance-request" method="POST">
+                <label for="issue">Describe the Issue:</label>
+                <textarea id="issue" name="issue" rows="5" required></textarea>
+                <br>
+                <button type="submit">Submit Request</button>
+            </form>
+        </section>
+    </main>
+
+</body>
+</html>

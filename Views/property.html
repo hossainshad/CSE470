@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="property.css">
+</head>
+<body>
+    <div class="sidebar">
+        <h2>USER</h2>
+        <button onclick="window.location.href='maintenance.html';">See Maintenance Request</button>
+        <button onclick="window.location.href='rent.html';">See Rent Request</button>
+        <button onclick="window.location.href='index.html';">Return to Homepage</button>
+        <button onclick="window.location.href='logout.html';">Logout</button>
+    </div>
+    <div class="main">
+        <a href="add_property.html" class="add-property">Add Property</a>
+        <h1>My Properties</h1>
+        <div class="property-list">
+            <div class="property-wrapper">
+                <div class="property" onclick="window.location.href='flat.html';">
+                    Property 1
+                </div>
+                <button class="delete-button" style="float: right;">Delete</button>
+            </div>
+            <div class="property-wrapper">
+                <div class="property" onclick="window.location.href='flat.html';">
+                    Property 2
+                </div>
+                <button class="delete-button" style="float: right;">Delete</button>
+            </div>
+            <div class="property-wrapper">
+                <div class="property" onclick="window.location.href='flat.html';">
+                    Property 3
+                </div>
+                <button class="delete-button" style="float: right;">Delete</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

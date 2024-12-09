@@ -1,0 +1,32 @@
+[{
+  "_id": {
+    "$oid": "6757585139de514862720247"
+  },
+  "username": "owner_user1",
+  "pass": "owner123",
+  "email": "owner1@example.com",
+  "name": "Lionel Messi",
+  "phone": "1234567890",
+  "address": "123 Elm Street",
+  "o_flag": true,
+  "t_flag": false,
+  "tenant_flat_id": null,
+  "tenant_flag": false,
+  "owner_flag": true
+},
+{
+  "_id": {
+    "$oid": "6757585139de514862720248"
+  },
+  "username": "tenant_user1",
+  "pass": "tenant123",
+  "email": "tenant1@example.com",
+  "name": "Tanjiro",
+  "phone": "9876543210",
+  "address": "456 Oak Avenue",
+  "o_flag": false,
+  "t_flag": true,
+  "tenant_flat_id": 1,
+  "tenant_flag": true,
+  "owner_flag": false
+}]

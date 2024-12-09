@@ -1,0 +1,26 @@
+[{
+  "_id": {
+    "$oid": "6757585139de514862720252"
+  },
+  "rental_id": 1,
+  "flat_id": 1,
+  "tenant_username": "tenant_user1",
+  "start_date": {
+    "$date": "2024-11-01T00:00:00.000Z"
+  },
+  "rent_amount": 1200,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "6757585139de514862720253"
+  },
+  "rental_id": 2,
+  "flat_id": 2,
+  "tenant_username": "tenant_user1",
+  "start_date": {
+    "$date": "2025-01-01T00:00:00.000Z"
+  },
+  "rent_amount": 1500,
+  "status": "active"
+}]

@@ -1,0 +1,32 @@
+[{
+  "_id": {
+    "$oid": "6757585139de514862720250"
+  },
+  "request_id": 1,
+  "flat_id": 2,
+  "tenant_username": "tenant_user1",
+  "owner_username": "owner_user1",
+  "request_date": {
+    "$date": "2024-12-01T00:00:00.000Z"
+  },
+  "start_date": {
+    "$date": "2025-01-01T00:00:00.000Z"
+  },
+  "message": "Interested in renting flat 102"
+},
+{
+  "_id": {
+    "$oid": "6757585139de514862720251"
+  },
+  "request_id": 2,
+  "flat_id": 3,
+  "tenant_username": "tenant_user1",
+  "owner_username": "owner_user1",
+  "request_date": {
+    "$date": "2024-12-05T00:00:00.000Z"
+  },
+  "start_date": {
+    "$date": "2025-01-10T00:00:00.000Z"
+  },
+  "message": "Looking for a cozy 1BHK flat"
+}]

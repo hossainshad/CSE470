@@ -1,0 +1,20 @@
+[{
+  "_id": {
+    "$oid": "6757585139de514862720256"
+  },
+  "m_id": 1,
+  "owner_username": "owner_user1",
+  "tenant_username": "tenant_user1",
+  "maintenance_desc": "Fix leaking faucet",
+  "flat_id": 1
+},
+{
+  "_id": {
+    "$oid": "6757585139de514862720257"
+  },
+  "m_id": 2,
+  "owner_username": "owner_user1",
+  "tenant_username": "tenant_user1",
+  "maintenance_desc": "Replace broken window",
+  "flat_id": 2
+}]

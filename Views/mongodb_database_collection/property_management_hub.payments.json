@@ -1,0 +1,26 @@
+[{
+  "_id": {
+    "$oid": "6757585139de514862720254"
+  },
+  "payment_id": 1,
+  "rental_id": 1,
+  "amount": 1200,
+  "payment_month": 11,
+  "payment_year": 2024,
+  "paid_date": {
+    "$date": "2024-11-05T00:00:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6757585139de514862720255"
+  },
+  "payment_id": 2,
+  "rental_id": 1,
+  "amount": 1200,
+  "payment_month": 12,
+  "payment_year": 2024,
+  "paid_date": {
+    "$date": "2024-12-05T00:00:00.000Z"
+  }
+}]

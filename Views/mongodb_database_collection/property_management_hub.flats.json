@@ -1,0 +1,80 @@
+[{
+  "_id": {
+    "$oid": "6757585139de51486272024b"
+  },
+  "flat_id": 1,
+  "property_id": 1,
+  "flat_num": 101,
+  "beds": 2,
+  "baths": 2,
+  "sqft": 1200,
+  "floor": 1,
+  "additional_info": "Great view of the park",
+  "status": "rented",
+  "rent_amount": 1200,
+  "thumbnail_path": "path/to/image1.jpg"
+},
+{
+  "_id": {
+    "$oid": "6757585139de51486272024c"
+  },
+  "flat_id": 2,
+  "property_id": 1,
+  "flat_num": 102,
+  "beds": 3,
+  "baths": 2,
+  "sqft": 1500,
+  "floor": 1,
+  "additional_info": "Corner flat",
+  "status": "available",
+  "rent_amount": 1500,
+  "thumbnail_path": "path/to/image2.jpg"
+},
+{
+  "_id": {
+    "$oid": "6757585139de51486272024d"
+  },
+  "flat_id": 3,
+  "property_id": 1,
+  "flat_num": 201,
+  "beds": 1,
+  "baths": 1,
+  "sqft": 800,
+  "floor": 2,
+  "additional_info": "Cozy flat",
+  "status": "available",
+  "rent_amount": 800,
+  "thumbnail_path": "path/to/image3.jpg"
+},
+{
+  "_id": {
+    "$oid": "6757585139de51486272024e"
+  },
+  "flat_id": 4,
+  "property_id": 2,
+  "flat_num": 301,
+  "beds": 2,
+  "baths": 2,
+  "sqft": 1100,
+  "floor": 3,
+  "additional_info": "City view",
+  "status": "available",
+  "rent_amount": 1100,
+  "thumbnail_path": "path/to/image4.jpg"
+},
+{
+  "_id": {
+    "$oid": "6757585139de51486272024f"
+  },
+  "flat_id": 5,
+  "property_id": 2,
+  "flat_num": 302,
+  "beds": 3,
+  "baths": 3,
+  "sqft": 1600,
+  "floor": 3,
+  "additional_info": "Spacious and sunny",
+  "status": "available",
+  "rent_amount": 1600,
+  "thumbnail_path": "path/to/image5.jpg"
+}]

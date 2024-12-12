@@ -1,0 +1,24 @@
+[{
+  "_id": {
+    "$oid": "6757585139de514862720249"
+  },
+  "p_id": 1,
+  "owner_username": "owner_user1",
+  "property_name": "Greenwood Apartments",
+  "location_area": "Downtown",
+  "address": "123 Elm Street",
+  "lift_status": true,
+  "total_flats": 3
+},
+{
+  "_id": {
+    "$oid": "6757585139de51486272024a"
+  },
+  "p_id": 2,
+  "owner_username": "owner_user1",
+  "property_name": "Maple Residences",
+  "location_area": "Uptown",
+  "address": "789 Pine Boulevard",
+  "lift_status": false,
+  "total_flats": 2
+}]

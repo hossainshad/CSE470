@@ -1,19 +1,20 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    color: white;
-    background-color: #1a1a1a;
+    background-color: #ffffff;
+    color: #333;
 }
 
 header {
-    background-color: #004d00;
+    background-color: #e3f2fd;
     padding: 20px;
     text-align: center;
+    border-bottom: 2px solid #90caf9;
 }
 
 header h1 {
     margin: 0;
-    color: #fff;
+    color: #0d47a1;
 }
 
 nav ul {
@@ -28,7 +29,7 @@ nav ul li {
 }
 
 nav ul li a {
-    color: white;
+    color: #0d47a1;
     text-decoration: none;
     font-weight: bold;
 }
@@ -36,7 +37,8 @@ nav ul li a {
 .hero {
     padding: 50px;
     text-align: center;
-    background-color: #006600;
+    background-color: #bbdefb;
+    color: #0d47a1;
 }
 
 .hero h2 {
@@ -49,12 +51,13 @@ nav ul li a {
 
 .card {
     background-color: white;
-    color: black;
+    color: #333;
     margin: 30px auto;
     padding: 20px;
     max-width: 300px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #90caf9;
     text-align: center;
 }
 
@@ -66,24 +69,24 @@ nav ul li a {
     display: inline-block;
     margin-top: 15px;
     padding: 10px 20px;
-    background-color: #004d00;
+    background-color: #42a5f5;
     color: white;
     text-decoration: none;
     border-radius: 5px;
 }
 
 .card .btn:hover {
-    background-color: #007a00;
+    background-color: #1e88e5;
 }
 
 footer {
-    background-color: #004d00;
+    background-color: #e3f2fd;
     padding: 10px 0;
     text-align: center;
 }
 
 footer a {
-    color: white;
+    color: #0d47a1;
     text-decoration: none;
     margin: 0 5px;
 }

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flats</title>
+    <link rel="stylesheet" href="flat.css"> 
+</head>
+<body>
+    <div class="sidebar">
+        <h2>USER</h2>
+        <button onclick="window.location.href='maintenance.html';">See Maintenance Request</button>
+        <button onclick="window.location.href='rent.html';">See Rent Request</button>
+        <button onclick="window.location.href='property.html';">Return to Homepage</button>
+        <button onclick="window.location.href='logout.html';">Logout</button>
+    </div>
+    <div class="main">
+        <a href="addFlat.html" class="add-flat">Add Flat</a>
+        <h1>Flats in Property</h1>
+        <div class="flat-list">
+            <div class="flat-wrapper">
+                <div class="flat">
+                    <span>Flat 1</span>
+                </div>
+                <button class="delete-flat">Delete</button>
+            </div>
+            <div class="flat-wrapper">
+                <div class="flat">
+                    <span>Flat 2</span>
+                </div>
+                <button class="delete-flat">Delete</button>
+            </div>
+            <div class="flat-wrapper">
+                <div class="flat">
+                    <span>Flat 3</span>
+                </div>
+                <button class="delete-flat">Delete</button>
+            </div>
+        </div>
+    </div>
+    
+<!-- Rent Summary Box -->
+    <div class="rent-summary">
+        <h2>Rent Summary</h2>
+        <div class="summary-item">
+            <span>Total Rent Amount:</span>
+            <span class="amount">TK 5000</span> 
+        </div>
+        <div class="summary-item">
+            <span>Collected Rent Amount:</span>
+            <span class="amount">TK 3000</span> 
+        </div> 
+        <div class="summary-item">
+            <span>Due rent amount:</span>
+            <span class="amount">TK 0</span> 
+        </div> 
+    </div>
+</body>
+</html>
+</html>

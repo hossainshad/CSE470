@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #e3f2fd;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #42a5f5;
+    }
+
+    form {
+      width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #bbdefb;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    input[type="text"], 
+    input[type="password"], 
+    input[type="email"], 
+    input[type="number"] {
+      width: 480px;
+      padding: 8px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      border: 1px solid #42a5f5;
+      border-radius: 4px;
+    }
+
+    input[type="checkbox"] {
+      margin: 5px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      color: white;
+      background-color: #42a5f5;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #1e88e5;
+    }
+
+    .secondary-button {
+      background-color: #d3ebff;
+      color: #42a5f5;
+      border: 2px solid #42a5f5;
+    }
+
+    .secondary-button:hover {
+      background-color: #bbdefb;
+    }
+
+    p {
+      text-align: center;
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1>Register</h1>
+  <% if (error) { %>
+    <p><%= error %></p>
+  <% } %>
+  <form action="/register" method="POST">
+    <label>Username:</label>
+    <input type="text" name="username" required>
+    
+    <label>Password:</label>
+    <input type="password" name="pass" required>
+    
+    <label>Email:</label>
+    <input type="email" name="email" required>
+    
+    <label>Name:</label>
+    <input type="text" name="name" required>
+    
+    <label>Phone:</label>
+    <input type="text" name="phone" required>
+    
+    <label>Address:</label>
+    <input type="text" name="address" required>
+    
+    <button type="submit">Register</button>
+    <button type="button" class="secondary-button">Cancel</button>
+  </form>
+</body>
+</html>

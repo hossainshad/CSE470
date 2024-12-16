@@ -1,16 +1,14 @@
 import User from '../models/User.js';
 
-// GET register page
 export const getRegisterPage = (req, res) => {
   res.render('register', { error: null });
 };
 
-// POST register form
+
 export const registerUser = async (req, res) => {
   const { username, pass, email, name, phone, address, o_flag, t_flag, tenant_flat_id } = req.body;
 
   try {
-    // Check if the username is already taken
     const userExists = await User.findOne({ username });
     if (userExists) {
       return res.render('register', { error: 'Username already exists' });
@@ -21,7 +19,6 @@ export const registerUser = async (req, res) => {
         return res.render('register', {error : "Email already exists"});
     }
 
-    // Create and save a new user
     const newUser = new User({
       username,
       pass,

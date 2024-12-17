@@ -17,12 +17,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, '../public')));
 
-// Set EJS as the view engine
+// Setting EJS as the view engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 // Routes
-app.use('/', registerRoutes);
+app.use(registerRoutes);
 app.use(loginRoutes)
 
 const PORT = process.env.PORT || 3000;

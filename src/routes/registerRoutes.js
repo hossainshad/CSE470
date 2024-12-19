@@ -3,7 +3,6 @@ import { getRegisterPage, registerUser } from '../controllers/registerController
 
 const router = express.Router();
 
-// Routes
 router.get('/register', getRegisterPage);
 router.post('/register', registerUser);
 

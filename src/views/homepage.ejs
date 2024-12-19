@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EstateElite - Luxury Real Estate</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .hero-section {
+            background-color: #1E293B;
+            color: #F8FAFC;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .search-filters {
+            background-color: #FFFFFF;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin: -40px auto 40px;
+            max-width: 1000px;
+            position: relative;
+        }
+
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .filter-item select, 
+        .filter-item input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #E2E8F0;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .property-card {
+            background: #FFFFFF;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease;
+        }
+
+        .property-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .property-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .property-details {
+            padding: 20px;
+        }
+
+        .property-price {
+            font-size: 1.5rem;
+            color: #3B82F6;
+            font-weight: 600;
+        }
+
+        .property-features {
+            display: flex;
+            gap: 20px;
+            margin: 15px 0;
+            color: #64748B;
+            font-size: 0.9rem;
+        }
+
+        .property-tags {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .tag {
+            background: #EFF6FF;
+            color: #3B82F6;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: #3B82F6;
+            color: #FFFFFF;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: #3B82F6;
+            border: 2px solid #3B82F6;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body>
+    <%- include('header') %>
+
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1>Find Your Dream Property</h1>
+            <p>Discover the finest properties in prime locations</p>
+        </div>
+    </section>
+
+    <div class="search-filters">
+        <form class="filter-grid">
+            <div class="filter-item">
+                <select name="property-type">
+                    <option value="">Property Type</option>
+                    <option value="house">House</option>
+                    <option value="apartment">Apartment</option>
+                    <option value="villa">Villa</option>
+                </select>
+            </div>
+            <div class="filter-item">
+                <select name="location">
+                    <option value="">Location</option>
+                    <option value="new-york">New York</option>
+                    <option value="los-angeles">Los Angeles</option>
+                    <option value="miami">Miami</option>
+                </select>
+            </div>
+            <div class="filter-item">
+                <select name="price-range">
+                    <option value="">Price Range</option>
+                    <option value="0-500000">$0 - $500,000</option>
+                    <option value="500000-1000000">$500,000 - $1M</option>
+                    <option value="1000000+">$1M+</option>
+                </select>
+            </div>
+            <div class="filter-item">
+                <input type="number" placeholder="Bedrooms" min="1">
+            </div>
+            <div class="filter-item">
+                <button class="btn btn-primary" style="width: 100%;">Search</button>
+            </div>
+        </form>
+    </div>
+
+    <section class="properties-grid">
+        <!-- Demo Property Card -->
+        <div class="property-card">
+            <div class="property-image" style="background-image: url('https://via.placeholder.com/400x300')"></div>
+            <div class="property-details">
+                <h3>Luxury Waterfront Villa</h3>
+                <p class="property-price">$2,500,000</p>
+                <p>123 Ocean Drive, Miami Beach, FL</p>
+                <div class="property-features">
+                    <span><i class="fas fa-bed"></i> 4 Beds</span>
+                    <span><i class="fas fa-bath"></i> 3.5 Baths</span>
+                    <span><i class="fas fa-ruler-combined"></i> 3,500 sqft</span>
+                </div>
+                <div class="property-tags">
+                    <span class="tag">Waterfront</span>
+                    <span class="tag">Pool</span>
+                    <span class="tag">Modern</span>
+                </div>
+            </div>
+        </div>
+        <!-- Add more property cards as needed -->
+    </section>
+
+    <%- include('footer') %>
+</body>
+</html>

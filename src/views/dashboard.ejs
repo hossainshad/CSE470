@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <nav class="dashboard-nav">
+            <div class="user-profile">
+                <h2><%= user.username %></h2>
+                
+                <%const role = 'None';if (user.o_flag && user.t_flag){const role = 'ot' } else if (user.o_flag){const role= "owner"} else {const role = "tenant"} %>
+                <p> Browse Properties</p>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/owner/add-property">Add Property</a></li>
+                <% if (role === 'owner') { %>
+                    <li><a href="/owner/properties">My Properties</a></li>
+                <% } else if (role === "tenant") { %>
+                    <li><a href="/tenant/my-rentals">My Rentals</a></li>
+                <% } %>
+                
+                <li><a href="/profile">Profile</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </nav>
+
+        <main class="dashboard-content">
+            <div class="welcome-section">
+                <h1>Welcome, <%= user.name %></h1>
+                <p>This is your personalized space where you can manage your rental activities.</p>
+            </div>
+
+            <div class="dashboard-cards">
+                <div class="card">
+                    <h3>Quick Actions</h3>
+                    <% if (role === 'owner') { %>
+                        <ul>
+                            <li>View Current Listings</li>
+                            <li>Add New Property</li>
+                            <li>Manage Tenants</li>
+                        </ul>
+                    <% } else { %>
+                        <ul>
+                            <li>Search Available Properties</li>
+                            <li>View Current Rental</li>
+                            <li>Maintenance Requests</li>
+                        </ul>
+                    <% } %>
+                </div>
+
+                <div class="card">
+                    <h3>Recent Activity</h3>
+                    <p>No recent activity to display.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <span>&copy; 2024 Rental Management System</span>
+        </div>
+    </footer>
+
+    <script src="/js/dashboard.js"></script>
+</body>
+</html>

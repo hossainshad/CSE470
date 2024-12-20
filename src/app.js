@@ -10,6 +10,7 @@ import OwnerController from './controllers/OwnerController.js'; // Assuming you 
 import tenantRoutes from './routes/tenantRoutes.js'; // Assuming you have a router for tenant
 import PaymentController from './controllers/PaymentController.js';
 import paymentRoutes from "./routes/paymentRoutes.js";
+
 import session from 'express-session';
 
 
@@ -53,6 +54,7 @@ app.use('/payment', paymentRoutes);
 
 
 app.post('/tenant/process-payment', PaymentController.processPayment);
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));

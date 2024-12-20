@@ -60,18 +60,14 @@
             </div>
         </main>
     </div>
-
-    <footer class="footer">
-        <div class="container">
-            <span>&copy; 2024 Rental Management System</span>
-        </div>
-    </footer>
+    <%- include('footer') %>
+    
     <!-- Modal Form -->
     <div id="propertyModal" class="modal">
         <div class="modal-content">
             <span class="close-modal">&times;</span>
             <h2>Add New Property</h2>
-            <form id="propertyForm" action="/owner/add-property" method="POST">
+            <form id="propertyForm" action="/add-property" method="POST">
                 <div class="form-group">
                     <label for="propertyName">Property Name</label>
                     <input type="text" id="propertyName" name="propertyName" required>

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/modal.css">
 </head>
 <body>
     <div class="dashboard-container">
@@ -65,7 +66,46 @@
             <span>&copy; 2024 Rental Management System</span>
         </div>
     </footer>
+    <!-- Modal Form -->
+    <div id="propertyModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Add New Property</h2>
+            <form id="propertyForm" action="/owner/add-property" method="POST">
+                <div class="form-group">
+                    <label for="propertyName">Property Name</label>
+                    <input type="text" id="propertyName" name="propertyName" required>
+                </div>
 
-    <script src="/js/dashboard.js"></script>
+                <div class="form-group">
+                    <label for="area">Area</label>
+                    <select id="area" name="area" required>
+                        <option value="">Select Area</option>
+                        <option value="Dhanmondi">Dhanmondi</option>
+                        <option value="Gulshan">Gulshan</option>
+                        <option value="Mohammadpur">Mohammadpur</option>
+                        <option value="Banani">Banani</option>
+                        <option value="Uttara">Uttara</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <textarea id="address" name="address" required></textarea>
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <label for="liftStatus">
+                        <input type="checkbox" id="liftStatus" name="liftStatus">
+                        Lift Available
+                    </label>
+                </div>
+
+                <button type="submit" class="submit-btn">Add Property</button>
+            </form>
+        </div>
+    </div>
+    <script src="/js/modal.js"></script>
+
 </body>
 </html>

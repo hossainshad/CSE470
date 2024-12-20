@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make a Payment</title>
+    <link rel="stylesheet" href="/css/styles.css"> <!-- Optional, for styling -->
+</head>
+<body>
+    <div class="payment-section">
+        <h1>Payment Information</h1>
+        
+        <form action="/payment/processPayment" method="POST">
+            <div>
+                <label for="rentalId">Rental ID</label>
+                <input type="text" id="rentalId" name="rentalId" required />
+            </div>
+            <div>
+                <label for="amount">Amount</label>
+                <input type="number" id="amount" name="amount" required />
+            </div>
+            <button type="submit">Submit Payment</button>
+        </form>
+</body>
+</html>

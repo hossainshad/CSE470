@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <style>
+    body {
+    font-family: 'Inter', sans-serif;
+    background-color: rgb(236, 251, 255);
+    color: #1E293B;
+    margin: 0;
+    padding: 32px;
+}
+
+h1 {
+    text-align: center;
+    color: #1E293B;
+    margin-bottom: 32px;
+    font-size: 2rem;
+}
+
+form {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 32px;
+    background-color: #FFFFFF;
+    border-radius: 12px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #1E293B;
+    font-size: 0.875rem;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus {
+    outline: none;
+    border-color: #3B82F6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+input[type="checkbox"] {
+    margin: 8px;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 16px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #FFFFFF;
+    background-color: #3B82F6;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+button:hover {
+    background-color: #2563EB;
+    transform: translateY(-1px);
+}
+
+.secondary-button {
+    background-color: #FFFFFF;
+    color: #3B82F6;
+    border: 2px solid #3B82F6;
+}
+
+.secondary-button:hover {
+    background-color: #EFF6FF;
+}
+
+p {
+    text-align: center;
+    color: #EF4444;
+    margin-top: 16px;
+    font-size: 0.875rem;
+}
+  </style>
+</head>
+<body>
+  <h1>Register</h1>
+  <% if (error) { %>
+    <p><%= error %></p>
+  <% } %>
+  <form action="/register" method="POST">
+    <label>Username:</label>
+    <input type="text" name="username" required>
+    
+    <label>Password:</label>
+    <input type="password" name="pass" required>
+    
+    <label>Email:</label>
+    <input type="email" name="email" required>
+    
+    <label>Name:</label>
+    <input type="text" name="name" required>
+    
+    <label>Phone:</label>
+    <input type="text" name="phone" required>
+    
+    <label>Address:</label>
+    <input type="text" name="address" required>
+    
+    <button type="submit">Register</button>
+    <button type="button" class="secondary-button">Cancel</button>
+  </form>
+</body>
+</html>

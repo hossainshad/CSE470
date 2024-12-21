@@ -6,6 +6,7 @@
     <title>Dashboard</title>
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="/css/modal.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="dashboard-container">
@@ -13,7 +14,8 @@
             <div class="user-profile">
                 <h2><%= user.username %></h2>
                 
-                <%const role = 'None';if (user.o_flag && user.t_flag){const role = 'ot' } else if (user.o_flag){const role= "owner"} else {const role = "tenant"} %>
+                <%var role = 'None';if (user.o_flag && user.t_flag){role = 'ot' } else if (user.o_flag){ role= "owner"} else {role = "tenant"}
+                console.log(role) %>
                 <p> Browse Properties</p>
             </div>
             <ul class="nav-menu">
@@ -37,22 +39,48 @@
 
             <div class="dashboard-cards">
                 <div class="card">
-                    <h3>Quick Actions</h3>
+                    <h3>My Properties</h3>
                     <% if (role === 'owner') { %>
-                        <ul>
-                            <li>View Current Listings</li>
-                            <li>Add New Property</li>
-                            <li>Manage Tenants</li>
-                        </ul>
+                        <% if (properties && properties.length > 0) { %>
+                            <div class="properties-grid">
+                                <% properties.forEach(property => { %>
+                                    <div class="property-card">
+                                        <div class="property-header">
+                                            <h4><%= property.property_name %></h4>
+                                            <span class="property-area"><%= property.location_area %></span>
+                                        </div>
+                                        <div class="property-details">
+                                            <p><i class="fas fa-map-marker-alt"></i> <%= property.address %></p>
+                                            <div class="property-features">
+                                                <span class="feature <%= property.lift_status ? 'feature-active' : 'feature-inactive' %>">
+                                                    <i class="fas fa-elevator"></i>
+                                                    <%= property.lift_status ? 'Lift Available' : 'No Lift' %>
+                                                </span>
+                                                <span class="feature">
+                                                    <i class="fas fa-building"></i>
+                                                    <%= property.total_flats %> Flats
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="property-actions">
+                                            <a href="/owner/property/<%= property.p_id %>" class="manage-btn">Manage Property</a>
+                                        </div>
+                                    </div>
+                                <% }); %>
+                            </div>
+                        <% } else { %>
+                            <div class="empty-state">
+                                <p>No properties added yet.</p>
+                            </div>
+                        <% } %>
                     <% } else { %>
-                        <ul>
-                            <li>Search Available Properties</li>
-                            <li>View Current Rental</li>
-                            <li>Maintenance Requests</li>
-                        </ul>
+                        <div class="empty-state">
+                            <p>You don't have any properties.</p>
+                            <p class="text-sm text-gray-500 mt-2">Only property owners can add and manage properties.</p>
+                        </div>
                     <% } %>
                 </div>
-
+            
                 <div class="card">
                     <h3>Recent Activity</h3>
                     <p>No recent activity to display.</p>
@@ -70,12 +98,12 @@
             <form id="propertyForm" action="/add-property" method="POST">
                 <div class="form-group">
                     <label for="propertyName">Property Name</label>
-                    <input type="text" id="propertyName" name="propertyName" required>
+                    <input type="text" id="propertyName" name="property_name" required>
                 </div>
 
                 <div class="form-group">
                     <label for="area">Area</label>
-                    <select id="area" name="area" required>
+                    <select id="area" name="location_area" required>
                         <option value="">Select Area</option>
                         <option value="Dhanmondi">Dhanmondi</option>
                         <option value="Gulshan">Gulshan</option>
@@ -92,7 +120,7 @@
 
                 <div class="form-group checkbox-group">
                     <label for="liftStatus">
-                        <input type="checkbox" id="liftStatus" name="liftStatus">
+                        <input type="checkbox" id="liftStatus" name="lift_status">
                         Lift Available
                     </label>
                 </div>

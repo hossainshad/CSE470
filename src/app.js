@@ -6,9 +6,6 @@ import registerRoutes from './routes/registerRoutes.js';
 import loginRoutes from "./routes/loginRoutes.js"
 import dashboardRoutes from "./routes/dashboardRoutes.js"
 import homepageRoutes from "./routes/homeRoutes.js"
-import OwnerController from './controllers/OwnerController.js'; // Assuming you have this controller
-import tenantRoutes from './routes/tenantRoutes.js'; // Assuming you have a router for tenant
-import PaymentController from './controllers/PaymentController.js';
 import paymentRoutes from "./routes/paymentRoutes.js";
 
 import session from 'express-session';
@@ -35,13 +32,10 @@ app.use(session({
 // Setting EJS as the view engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-
-
-app.get('/tenant/ownerInfo', OwnerController.showOwnerInfo);
-
-app.get('/tenant/payment.ejs', (req, res) => {
-    res.render('tenant/payment.ejs'); // Render the payment page (make sure this ejs file exists)
-});
+// app.get('/tenant/ownerInfo', OwnerController.showOwnerInfo);
+// app.get('/tenant/payment.ejs', (req, res) => {
+//     res.render('tenant/payment.ejs'); // Render the payment page (make sure this ejs file exists)
+// });
 
 
 // Routes
@@ -49,12 +43,6 @@ app.use(registerRoutes);
 app.use(loginRoutes);
 app.use(dashboardRoutes);
 app.use(homepageRoutes);
-app.use('/tenant', tenantRoutes);
-app.use('/payment', paymentRoutes);
-
-
-app.post('/tenant/process-payment', PaymentController.processPayment);
-
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));

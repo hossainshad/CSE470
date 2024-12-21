@@ -12,7 +12,8 @@ export const addNewProperty = async (req, res) => {
         };
 
         
-        await PropertyModel.addProperty(propertyData);
+        const updatedUser = await PropertyModel.addProperty(propertyData);
+        req.session.user = updatedUser;
         res.redirect('/dashboard');
     } catch (err) {
         console.log(err.message);

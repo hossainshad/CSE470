@@ -15,7 +15,7 @@
                 <h2><%= user.username %></h2>
                 
                 <%var role = 'None';if (user.o_flag && user.t_flag){role = 'ot' } else if (user.o_flag){ role= "owner"} else {role = "tenant"}
-                console.log(role) %>
+                console.log(user) %>
                 <p> Browse Properties</p>
             </div>
             <ul class="nav-menu">

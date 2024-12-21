@@ -1,3 +1,4 @@
+// models/Properties.js
 import mongoose from "mongoose";
 import User from "./User.js"; 
 
@@ -11,13 +12,15 @@ const propertySchema = new mongoose.Schema({
     total_flats: { type: Number, required: true, default: 0 }
 });
 
-// Create the model
 const Property = mongoose.model("Property", propertySchema);
 
-// Model methods for database operations
 export const PropertyModel = {
     async addProperty(propertyData) {
         try {
+         const updatedUser=  await User.findOneAndUpdate(
+                { username: propertyData.owner_username },
+                { o_flag: true },
+                { new: true } );
             const newProperty = new Property({
                 p_id: Date.now(),
                 owner_username: propertyData.owner_username,
@@ -28,22 +31,26 @@ export const PropertyModel = {
             });
             
             await newProperty.save();
-            await User.findOneAndUpdate(
-                { username: propertyData.owner_username },
-                { o_flag: true });
+            return updatedUser;
         } catch (error) {
             throw new Error(`Error adding property: ${error.message}`);
         }
     },
     
-    // Add other model methods here
     async getAllProperties() {
         return await Property.find({});
     },
     
     async getPropertyByOwner(username) {
-        console.log(username)
         return await Property.find({ owner_username: username });
+    },
+
+    
+    async getPropertyById(propertyId, ownerUsername) {
+        return await Property.findOne({ 
+            p_id: propertyId, 
+            owner_username: ownerUsername 
+        });
     }
 };
 

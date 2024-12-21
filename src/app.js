@@ -6,8 +6,6 @@ import registerRoutes from './routes/registerRoutes.js';
 import loginRoutes from "./routes/loginRoutes.js"
 import dashboardRoutes from "./routes/dashboardRoutes.js"
 import homepageRoutes from "./routes/homeRoutes.js"
-import paymentRoutes from "./routes/paymentRoutes.js";
-
 import session from 'express-session';
 
 

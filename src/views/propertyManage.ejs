@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Property</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #F8FAFC;
+            color: #1E293B;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .property-header {
+            background: #FFFFFF;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .property-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .property-title h1 {
+            color: #1E293B;
+            font-size: 1.875rem;
+        }
+
+        .property-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            padding: 1rem 0;
+            border-top: 1px solid #E2E8F0;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #64748B;
+        }
+
+        .info-item i {
+            color: #3B82F6;
+        }
+
+        .flats-section {
+            background: #FFFFFF;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .add-flat-btn {
+            background: #3B82F6;
+            color: #FFFFFF;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background-color 0.2s;
+        }
+
+        .add-flat-btn:hover {
+            background: #2563EB;
+        }
+
+        .flats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .flat-card {
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: transform 0.2s;
+        }
+
+        .flat-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .flat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .flat-number {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1E293B;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .status-vacant {
+            background: #DCF7E3;
+            color: #059669;
+        }
+
+        .status-occupied {
+            background: #FEE2E2;
+            color: #DC2626;
+        }
+
+        .flat-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            color: #64748B;
+            font-size: 0.875rem;
+        }
+
+        .flat-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #E2E8F0;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 0.5rem;
+            border: 1px solid #E2E8F0;
+            border-radius: 6px;
+            background: #FFFFFF;
+            color: #64748B;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .action-btn:hover {
+            background: #F1F5F9;
+            color: #3B82F6;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #64748B;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            color: #CBD5E1;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .property-info {
+                grid-template-columns: 1fr;
+            }
+
+            .flats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Property Header -->
+        <div class="property-header">
+            <div class="property-title">
+                <h1>Sunshine Apartments</h1>
+                <a href="/dashboard" style="color: #3B82F6; text-decoration: none;">
+                    <i class="fas fa-arrow-left"></i> Back to Dashboard
+                </a>
+            </div>
+            <div class="property-info">
+                <div class="info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Location: Dhanmondi</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-building"></i>
+                    <span>Total Flats: 12</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-elevator"></i>
+                    <span>Lift Status: Available</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Flats Section -->
+        <div class="flats-section">
+            <div class="section-header">
+                <h2>Manage Flats</h2>
+                <button class="add-flat-btn">
+                    <i class="fas fa-plus"></i>
+                    Add New Flat
+                </button>
+            </div>
+
+            <!-- Inside the flats-grid div -->
+<div class="flats-grid">
+    <% if (flats && flats.length > 0) { %>
+        <% flats.forEach(flat => { %>
+            <div class="flat-card">
+                <div class="flat-header">
+                    <span class="flat-number"><%= flat.flat_number %></span>
+                    <span class="status-badge status-<%= flat.status %>">
+                        <%= flat.status.charAt(0).toUpperCase() + flat.status.slice(1) %>
+                    </span>
+                </div>
+                <div class="flat-details">
+                    <span><i class="fas fa-expand"></i> Size: <%= flat.size %> sq ft</span>
+                    <span><i class="fas fa-bed"></i> Bedrooms: <%= flat.bedrooms %></span>
+                    <span><i class="fas fa-bath"></i> Bathrooms: <%= flat.bathrooms %></span>
+                    <span><i class="fas fa-money-bill-wave"></i> Rent: ৳<%= flat.rent %></span>
+                </div>
+                <div class="flat-actions">
+                    <button class="action-btn" onclick="editFlat('<%= flat._id %>')">
+                        <i class="fas fa-edit"></i> Edit
+                    </button>
+                    <% if (flat.status === 'vacant') { %>
+                        <button class="action-btn" onclick="addTenant('<%= flat._id %>')">
+                            <i class="fas fa-user-plus"></i> Add Tenant
+                        </button>
+                    <% } else { %>
+                        <button class="action-btn" onclick="viewTenant('<%= flat._id %>')">
+                            <i class="fas fa-user"></i> View Tenant
+                        </button>
+                    <% } %>
+                </div>
+            </div>
+        <% }); %>
+    <% } else { %>
+        <div class="empty-state">
+            <i class="fas fa-building"></i>
+            <h3>No Flats Added Yet</h3>
+            <p>Start by adding your first flat to this property</p>
+        </div>
+    <% } %>
+</div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Owner Information</title>
+    <link rel="stylesheet" href="/css/styles.css"> <!-- Optional, for styling -->
+</head>
+<body>
+    <div class="owner-info">
+        <h1>Owner Information</h1>
+        
+        <div class="owner-details">
+            <p><strong>Name:</strong> <%= ownerInfo.name %></p>
+            <p><strong>Email:</strong> <%= ownerInfo.email %></p>
+            <p><strong>Phone:</strong> <%= ownerInfo.phone %></p>
+            <p><strong>Address:</strong> <%= ownerInfo.address %></p>
+            <p><strong>Username:</strong> <%= ownerInfo.username %></p>
+        </div>
+
+        <div class="payment-section">
+            <h2><a href="./payment.ejs">Make a Payment</a></h2>
+
+</body>
+</html>

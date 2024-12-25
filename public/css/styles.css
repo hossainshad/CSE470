@@ -12,13 +12,11 @@ body {
     color: #1E293B;
 }
 
-/* Dashboard Container */
 .dashboard-container {
     display: flex;
     min-height: 100vh;
 }
 
-/* Navigation Sidebar */
 .dashboard-nav {
     width: 280px;
     background-color: #1E293B;
@@ -354,5 +352,119 @@ body {
 
     .social-links {
         justify-content: center;
+    }
+}
+.properties-grid {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.property-card {
+    width: 300px;
+    background: white;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    padding: 1.25rem;
+    transition: all 0.3s ease;
+}
+
+.property-card:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.property-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.property-header h4 {
+    color: #1E293B;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.property-area {
+    background: #EFF6FF;
+    color: #3B82F6;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.875rem;
+}
+
+.property-details {
+    color: #64748B;
+    font-size: 0.875rem;
+}
+
+.property-features {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.75rem;
+}
+
+.feature {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+}
+
+.feature-active {
+    color: #059669;
+}
+
+.feature-inactive {
+    color: #DC2626;
+}
+
+.property-actions {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #E2E8F0;
+}
+
+.manage-btn {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: #3B82F6;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: background 0.3s ease;
+}
+
+.manage-btn:hover {
+    background: #2563EB;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 2rem;
+    color: #64748B;
+}
+
+.add-property-btn {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.75rem 1.5rem;
+    background: #3B82F6;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background 0.3s ease;
+}
+
+.add-property-btn:hover {
+    background: #2563EB;
+}
+
+@media (min-width: 640px) {
+    .properties-grid {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     }
 }

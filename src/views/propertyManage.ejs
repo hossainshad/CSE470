@@ -279,10 +279,11 @@
         }
 
         .flat-images img {
-            width: 100%;
-            height: 100px;
+            width: auto;
+            height: auto;
             object-fit: cover;
             border-radius: 4px;
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -329,6 +330,11 @@
                             <%= flat.status.charAt(0).toUpperCase() + flat.status.slice(1) %>
                         </span>
                     </div>
+                    <div class="flat-images">
+                        <% flat.images.forEach(image => {  %>
+                            <img src="<%= image %>" alt="Flat Image">
+                        <% }); %>
+                    </div>
                     <div class="flat-details">
                         <span><i class="fas fa-expand"></i> Size: <%= flat.size %> sq ft</span>
                         <span><i class="fas fa-bed"></i> Bedrooms: <%= flat.bedrooms %></span>
@@ -349,12 +355,7 @@
                             </button>
                         <% } %>
                     </div>
-                    <div class="flat-images">
-                        <% flat.images.forEach(image => { console.log(images,1) %>
-                            <img src="<%= image %>" alt="Flat Image">
-            
-                        <% }); %>
-                    </div>
+                    
                 </div>
             <% }); %>
         <% } else { %>
@@ -372,7 +373,7 @@
                 <h3>Add New Flat</h3>
                 <button class="close-modal" onclick="closeModal()">&times;</button>
             </div>
-            <form id="addFlatForm" action="/owner/property/<%= property.p_id %>/add-flat" method="POST">
+            <form id="addFlatForm" action="/owner/property/<%= property.p_id %>/add-flat" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="property_id" value="<%= property.p_id %>">
                 <div class="form-group">
                     <label for="flat_number">Flat Number</label>

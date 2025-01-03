@@ -201,14 +201,96 @@
                 grid-template-columns: 1fr;
             }
         }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: #FFFFFF;
+            border-radius: 12px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 500px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #64748B;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #1E293B;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #E2E8F0;
+            border-radius: 6px;
+            font-size: 0.875rem;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: #3B82F6;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.875rem;
+        }
+
+        .submit-btn:hover {
+            background: #2563EB;
+        }
+        .flat-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .flat-images img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Property Header -->
         <div class="property-header">
             <div class="property-title">
-                <h1>Sunshine Apartments</h1>
+                <h1><%= property.property_name %></h1>
                 <a href="/dashboard" style="color: #3B82F6; text-decoration: none;">
                     <i class="fas fa-arrow-left"></i> Back to Dashboard
                 </a>
@@ -216,70 +298,126 @@
             <div class="property-info">
                 <div class="info-item">
                     <i class="fas fa-map-marker-alt"></i>
-                    <span>Location: Dhanmondi</span>
+                    <span>Location: <%= property.location_area %></span>
                 </div>
                 <div class="info-item">
                     <i class="fas fa-building"></i>
-                    <span>Total Flats: 12</span>
+                    <span>Total Flats: <%= property.total_flats %></span>
                 </div>
                 <div class="info-item">
                     <i class="fas fa-elevator"></i>
-                    <span>Lift Status: Available</span>
+                    <span>Lift Status: <%= property.lift_status ? 'Available' : 'Not Available' %></span>
                 </div>
             </div>
         </div>
 
-        <!-- Flats Section -->
         <div class="flats-section">
             <div class="section-header">
                 <h2>Manage Flats</h2>
-                <button class="add-flat-btn">
+                <button class="add-flat-btn" onclick="openModal()">
                     <i class="fas fa-plus"></i>
                     Add New Flat
                 </button>
             </div>
-
-            <!-- Inside the flats-grid div -->
-<div class="flats-grid">
-    <% if (flats && flats.length > 0) { %>
-        <% flats.forEach(flat => { %>
-            <div class="flat-card">
-                <div class="flat-header">
-                    <span class="flat-number"><%= flat.flat_number %></span>
-                    <span class="status-badge status-<%= flat.status %>">
-                        <%= flat.status.charAt(0).toUpperCase() + flat.status.slice(1) %>
-                    </span>
-                </div>
-                <div class="flat-details">
-                    <span><i class="fas fa-expand"></i> Size: <%= flat.size %> sq ft</span>
-                    <span><i class="fas fa-bed"></i> Bedrooms: <%= flat.bedrooms %></span>
-                    <span><i class="fas fa-bath"></i> Bathrooms: <%= flat.bathrooms %></span>
-                    <span><i class="fas fa-money-bill-wave"></i> Rent: ৳<%= flat.rent %></span>
-                </div>
-                <div class="flat-actions">
-                    <button class="action-btn" onclick="editFlat('<%= flat._id %>')">
-                        <i class="fas fa-edit"></i> Edit
-                    </button>
-                    <% if (flat.status === 'vacant') { %>
-                        <button class="action-btn" onclick="addTenant('<%= flat._id %>')">
-                            <i class="fas fa-user-plus"></i> Add Tenant
+    <div class="flats-grid">
+        <% if (flats && flats.length > 0) { %>
+            <% flats.forEach(flat => { %>
+                <div class="flat-card">
+                    <div class="flat-header">
+                        <span class="flat-number"><%= flat.flat_number %></span>
+                        <span class="status-badge status-<%= flat.status %>">
+                            <%= flat.status.charAt(0).toUpperCase() + flat.status.slice(1) %>
+                        </span>
+                    </div>
+                    <div class="flat-details">
+                        <span><i class="fas fa-expand"></i> Size: <%= flat.size %> sq ft</span>
+                        <span><i class="fas fa-bed"></i> Bedrooms: <%= flat.bedrooms %></span>
+                        <span><i class="fas fa-bath"></i> Bathrooms: <%= flat.bathrooms %></span>
+                        <span><i class="fas fa-money-bill-wave"></i> Rent: ৳<%= flat.rent %></span>
+                    </div>
+                    <div class="flat-actions">
+                        <button class="action-btn" onclick="editFlat('<%= flat._id %>')">
+                            <i class="fas fa-edit"></i> Edit
                         </button>
-                    <% } else { %>
-                        <button class="action-btn" onclick="viewTenant('<%= flat._id %>')">
-                            <i class="fas fa-user"></i> View Tenant
-                        </button>
-                    <% } %>
+                        <% if (flat.status === 'vacant') { %>
+                            <button class="action-btn" onclick="addTenant('<%= flat._id %>')">
+                                <i class="fas fa-user-plus"></i> Add Tenant
+                            </button>
+                        <% } else { %>
+                            <button class="action-btn" onclick="viewTenant('<%= flat._id %>')">
+                                <i class="fas fa-user"></i> View Tenant
+                            </button>
+                        <% } %>
+                    </div>
+                    <div class="flat-images">
+                        <% flat.images.forEach(image => { console.log(images,1) %>
+                            <img src="<%= image %>" alt="Flat Image">
+            
+                        <% }); %>
+                    </div>
                 </div>
+            <% }); %>
+        <% } else { %>
+            <div class="empty-state">
+                <i class="fas fa-building"></i>
+                <h3>No Flats Added Yet</h3>
+                <p>Start by adding your first flat to this property</p>
             </div>
-        <% }); %>
-    <% } else { %>
-        <div class="empty-state">
-            <i class="fas fa-building"></i>
-            <h3>No Flats Added Yet</h3>
-            <p>Start by adding your first flat to this property</p>
+        <% } %>
         </div>
-    <% } %>
-</div>
     </div>
+    <div id="addFlatModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Flat</h3>
+                <button class="close-modal" onclick="closeModal()">&times;</button>
+            </div>
+            <form id="addFlatForm" action="/owner/property/<%= property.p_id %>/add-flat" method="POST">
+                <input type="hidden" name="property_id" value="<%= property.p_id %>">
+                <div class="form-group">
+                    <label for="flat_number">Flat Number</label>
+                    <input type="text" id="flat_number" name="flat_number" required>
+                </div>
+                <div class="form-group">
+                    <label for="size">Size (sq ft)</label>
+                    <input type="number" id="size" name="size" required>
+                </div>
+                <div class="form-group">
+                    <label for="bedrooms">Bedrooms</label>
+                    <input type="number" id="bedrooms" name="bedrooms" required>
+                </div>
+                <div class="form-group">
+                    <label for="bathrooms">Bathrooms</label>
+                    <input type="number" id="bathrooms" name="bathrooms" required>
+                </div>
+                <div class="form-group">
+                    <label for="rent">Rent (৳)</label>
+                    <input type="number" id="rent" name="rent" required>
+                </div>
+                <input type="file" name="images" multiple accept="image/*" required>
+                <button type="submit" class="submit-btn">Add Flat</button>
+                
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openModal() {
+            document.getElementById('addFlatModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('addFlatModal').style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('addFlatModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
 </body>
 </html>

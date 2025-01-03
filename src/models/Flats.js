@@ -9,7 +9,8 @@ const flatSchema = new mongoose.Schema({
     bathrooms: { type: Number, required: true },
     rent: { type: Number, required: true },
     status: { type: String, enum: ['vacant', 'occupied'], default: 'vacant' },
-    tenant_id: { type: String, default: null }
+    tenant_id: { type: String, default: null },
+    images: [{ type: String }]
 });
 
 const Flat = mongoose.model("Flat", flatSchema);

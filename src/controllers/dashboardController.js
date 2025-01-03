@@ -24,7 +24,6 @@ export const manageProperty = async (req, res) => {
     const propertyId = req.params.p_id;
 
     try {
-        // Use the model methods instead of direct database queries
         const property = await PropertyModel.getPropertyById(propertyId, user.username);
         
         if (!property) {

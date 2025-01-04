@@ -6,6 +6,7 @@ import registerRoutes from './routes/registerRoutes.js';
 import loginRoutes from "./routes/loginRoutes.js"
 import dashboardRoutes from "./routes/dashboardRoutes.js"
 import homepageRoutes from "./routes/homeRoutes.js"
+import paymentRoutes from './routes/paymentRoutes.js';
 import session from 'express-session';
 import flatRoutes from './routes/flatRoutes.js';
 
@@ -41,7 +42,12 @@ app.use(registerRoutes);
 app.use(loginRoutes);
 app.use(dashboardRoutes);
 app.use(homepageRoutes);
+
+
+=======
 app.use('/flats', flatRoutes);
+
+app.use(paymentRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));

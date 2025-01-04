@@ -11,6 +11,7 @@ const router = express.Router();
 router.get('/dashboard', requireAuth, dashboard);
 router.get('/owner-info', requireAuth, showOwnerInfo);
 router.get('/owner/property/:p_id', manageProperty);
+
 router.post("/add-property", requireAuth, addNewProperty);
 
 router.post('/owner/property/:p_id/add-flat', requireAuth, upload, addFlat);

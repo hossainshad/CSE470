@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+    <%- include('header') %>
     <div class="dashboard-container">
         <nav class="dashboard-nav">
             <div class="user-profile">
@@ -23,7 +24,7 @@
                 <% if (role === 'owner') { %>
                     <li><a href="/owner/properties">My Properties</a></li>
                 <% } else if (role === "tenant") { %>
-                    
+
                 <% } %>
                 <li><a href="/payment">My Rentals</a></li>
                 
@@ -101,8 +102,6 @@
         </main>
     </div>
     <%- include('footer') %>
-    
-    <!-- Modal Form -->
     <div id="propertyModal" class="modal">
         <div class="modal-content">
             <span class="close-modal">&times;</span>

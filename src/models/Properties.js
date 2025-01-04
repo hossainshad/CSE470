@@ -15,6 +15,11 @@ const propertySchema = new mongoose.Schema({
 const Property = mongoose.model("Property", propertySchema);
 
 export const PropertyModel = {
+    async getAllPropertiesExcludingOwner(ownerUsername) {
+        return await Property.find({
+            owner_username: { $ne: ownerUsername }
+        });
+    },
     async addProperty(propertyData) {
         try {
          const updatedUser=  await User.findOneAndUpdate(

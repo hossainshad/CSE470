@@ -272,18 +272,24 @@
             background: #2563EB;
         }
         .flat-images {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-            gap: 10px;
-            margin-top: 10px;
+            display: flex; /* Use flexbox for alignment */
+            justify-content: center; /* Center the image horizontally */
+            align-items: center; /* Center the image vertically */
+            height: 200px; /* Set a fixed height for the container */
+            overflow: hidden; /* Hide any overflow */
+            background-color: #f3f4f6; /* Optional: Add a subtle background color */
+            border-radius: 4px; /* Match the design style */
         }
 
         .flat-images img {
-            width: 100%;
-            height: 100px;
-            object-fit: cover;
-            border-radius: 4px;
+            max-width: 100%; /* Limit the width to the container */
+            max-height: 100%; /* Limit the height to the container */
+            object-fit: contain; /* Maintain aspect ratio and fit within bounds */
+            border-radius: 4px; /* Optional: Consistent border radius */
+            margin-bottom: 20px;
         }
+
+
     </style>
 </head>
 <body>
@@ -329,6 +335,9 @@
                             <%= flat.status.charAt(0).toUpperCase() + flat.status.slice(1) %>
                         </span>
                     </div>
+                    <div class="flat-images">
+                            <img src="<%= flat.images[0] %>" alt="Flat Image">
+                    </div>
                     <div class="flat-details">
                         <span><i class="fas fa-expand"></i> Size: <%= flat.size %> sq ft</span>
                         <span><i class="fas fa-bed"></i> Bedrooms: <%= flat.bedrooms %></span>
@@ -349,12 +358,7 @@
                             </button>
                         <% } %>
                     </div>
-                    <div class="flat-images">
-                        <% flat.images.forEach(image => { console.log(images,1) %>
-                            <img src="<%= image %>" alt="Flat Image">
-            
-                        <% }); %>
-                    </div>
+                    
                 </div>
             <% }); %>
         <% } else { %>
@@ -372,7 +376,7 @@
                 <h3>Add New Flat</h3>
                 <button class="close-modal" onclick="closeModal()">&times;</button>
             </div>
-            <form id="addFlatForm" action="/owner/property/<%= property.p_id %>/add-flat" method="POST">
+            <form id="addFlatForm" action="/owner/property/<%= property.p_id %>/add-flat" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="property_id" value="<%= property.p_id %>">
                 <div class="form-group">
                     <label for="flat_number">Flat Number</label>
@@ -394,7 +398,18 @@
                     <label for="rent">Rent (৳)</label>
                     <input type="number" id="rent" name="rent" required>
                 </div>
-                <input type="file" name="images" multiple accept="image/*" required>
+                <div class="form-group">
+                    <label for="image1">Main Image (Required)</label>
+                    <input type="file" name="images" accept="image/*" required>
+                </div>
+                <div class="form-group">
+                    <label for="image2">Additional Image (Optional)</label>
+                    <input type="file" name="images" accept="image/*">
+                </div>
+                <div class="form-group">
+                    <label for="image3">Additional Image (Optional)</label>
+                    <input type="file" name="images" accept="image/*">
+                </div>
                 <button type="submit" class="submit-btn">Add Flat</button>
                 
             </form>

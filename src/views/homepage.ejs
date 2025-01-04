@@ -131,6 +131,10 @@
         .btn:hover {
             transform: translateY(-1px);
         }
+        .property-card a {
+            text-decoration: none; 
+            color: inherit; 
+        }
     </style>
 </head>
 <body>
@@ -179,24 +183,27 @@
     </div>
 
     <section class="properties-grid">
-        <div class="property-card">
-            <div class="property-image" style="background-image: url('https://via.placeholder.com/400x300')"></div>
-            <div class="property-details">
-                <h3>Luxury Waterfront Villa</h3>
-                <p class="property-price">$2,500,000</p>
-                <p>123 Ocean Drive, Miami Beach, FL</p>
-                <div class="property-features">
-                    <span><i class="fas fa-bed"></i> 4 Beds</span>
-                    <span><i class="fas fa-bath"></i> 3.5 Baths</span>
-                    <span><i class="fas fa-ruler-combined"></i> 3,500 sqft</span>
+        <% if (flats && flats.length > 0) { %>
+            <% flats.forEach(flat => { %>
+                <div class="property-card">
+                    <a href="/flats/<%= flat._id %>"> 
+                    <div class="property-image" style="background-image: url('<%= flat.images[0] %>')"></div>
+                    <div class="property-details">
+                        <h3><%= flat.property_name %></h3>
+                        <p class="property-price">৳<%= flat.rent.toLocaleString() %>/month</p>
+                        <p><%= flat.address %>, <%= flat.location_area %></p>
+                        <div class="property-features">
+                            <span><i class="fas fa-bed"></i> <%= flat.bedrooms %> Beds</span>
+                            <span><i class="fas fa-bath"></i> <%= flat.bathrooms %> Baths</span>
+                            <span><i class="fas fa-ruler-combined"></i> <%= flat.size %> sqft</span>
+                        </div>
+                    </div>
+                    </a>
                 </div>
-                <div class="property-tags">
-                    <span class="tag">Waterfront</span>
-                    <span class="tag">Pool</span>
-                    <span class="tag">Modern</span>
-                </div>
-            </div>
-        </div>
+            <% }) %>
+        <% } else { %>
+            <p>No available properties found.</p>
+        <% } %>
     </section>
 
     <%- include('footer') %>

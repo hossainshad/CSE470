@@ -11,6 +11,9 @@ const rentalRequestSchema = new mongoose.Schema({
 rentalRequestSchema.statics.getOwnerRequests = async function(ownerUsername) {
     return await this.find({ owner_username: ownerUsername, status: 'pending' });
 };
+rentalRequestSchema.statics.getRequestWithDetails = async function(requestId) {
+    return await this.findOne({ request_id: requestId });
+};
 
 rentalRequestSchema.statics.rejectRequest = async function(requestId) {
     return await this.findOneAndDelete({ request_id: requestId });
@@ -26,6 +29,9 @@ rentalRequestSchema.statics.createRequest = async function(requestData) {
     return await newRequest.save();
 };
 
+rentalRequestSchema.statics.acceptRequest = async function(requestId) {
+    return await this.findOneAndDelete({ request_id: requestId });
+};
 rentalRequestSchema.statics.getRequestsByOwner = async function(ownerUsername) {
     return await this.find({ owner_username: ownerUsername });
 };

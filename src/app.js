@@ -9,7 +9,7 @@ import homepageRoutes from "./routes/homeRoutes.js"
 import paymentRoutes from './routes/paymentRoutes.js';
 import session from 'express-session';
 import flatRoutes from './routes/flatRoutes.js';
-
+import ownerRoutes from './routes/ownerRoutes.js';
 const app = express();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -42,9 +42,7 @@ app.use(registerRoutes);
 app.use(loginRoutes);
 app.use(dashboardRoutes);
 app.use(homepageRoutes);
-
-
-=======
+app.use('/owner', ownerRoutes);
 app.use('/flats', flatRoutes);
 
 app.use(paymentRoutes);

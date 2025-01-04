@@ -42,6 +42,7 @@ const rentalRequestsModal = {
                 console.error('Error:', error);
             });
     },
+    
 
     displayRequests: function(requests) {
         const requestsList = document.getElementById('requestsList');
@@ -61,10 +62,28 @@ const rentalRequestsModal = {
                             <button class="reject-btn" onclick="rentalRequestsModal.rejectRequest(${request.request_id})">
                                 Reject Request
                             </button>
+                            <button class="accept-btn" onclick="rentalRequestsModal.acceptRequest(${request.request_id})">
+                                Accept Request
+                            </button>
                         </div>
                     </div>
                 `;
             }).join('');
+    },
+    acceptRequest: function(requestId) {
+        if (confirm('Are you sure you want to accept this request?')) {
+            fetch(`/owner/accept-request/${requestId}`, {
+                method: 'POST'
+            })
+            .then(function(response) {
+                if (response.ok) {
+                    rentalRequestsModal.fetchRequests();  // Refresh the list
+                }
+            })
+            .catch(function(error) {
+                console.error('Error:', error);
+            });
+        }
     },
     rejectRequest: function(requestId) {
         if (confirm('Are you sure you want to reject this request?')) {

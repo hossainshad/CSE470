@@ -1,0 +1,52 @@
+<p><%= role === 'owner' ? 'Owner' : 'Tenant' %> Dashboard</p>
+</div>
+<ul class="nav-menu">
+    <% if (role === 'owner') { %>
+        <li><a href="/owner/properties">My Properties</a></li>
+        <li><a href="/owner/add-property">Add Property</a></li>
+    <% } else { %>
+        <li><a href="/tenant/search-properties">Find Properties</a></li>
+        <li><a href="/tenant/my-rentals">My Rentals</a></li>
+    <% } %>
+    <li><a href="/profile">Profile</a></li>
+    <li><a href="/logout">Logout</a></li>
+</ul>
+</nav>
+
+<main class="dashboard-content">
+<div class="welcome-section">
+    <h1>Welcome to Your Dashboard</h1>
+    <p>This is your personalized space where you can manage your rental activities.</p>
+</div>
+
+<div class="dashboard-cards">
+    <div class="card">
+        <h3>Quick Actions</h3>
+        <% if (role === 'owner') { %>
+            <ul>
+                <li>View Current Listings</li>
+                <li>Add New Property</li>
+                <li>Manage Tenants</li>
+            </ul>
+        <% } else { %>
+            <ul>
+                <li>Search Available Properties</li>
+                <li>View Current Rental</li>
+                <li>Maintenance Requests</li>
+            </ul>
+        <% } %>
+    </div>
+
+    <div class="card">
+        <h3>Recent Activity</h3>
+        <p>No recent activity to display.</p>
+    </div>
+</div>
+</main>
+</div>
+
+<footer class="footer">
+<div class="container">
+<span>&copy; 2024 Rental Management System</span>
+</div>
+</footer>

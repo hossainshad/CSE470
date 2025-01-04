@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flat Details</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f9fafb;
+            color: #333;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        .flat-details-card {
+            display: flex;
+            flex-wrap: wrap;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .flat-details-card .gallery {
+            flex: 1 1 50%;
+            background: #f5f5f5;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            padding: 20px;
+        }
+        .flat-details-card .gallery img {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .flat-details-content {
+            flex: 1 1 50%;
+            padding: 30px;
+        }
+        .flat-details-content h2 {
+            font-size: 2em;
+            color: #3B82F6;
+            margin-bottom: 15px;
+        }
+        .flat-details-content p {
+            margin: 10px 0;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+        .flat-details-content p span {
+            font-weight: bold;
+        }
+        .owner-section {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 12px;
+        }
+        .owner-section h3 {
+            font-size: 1.5em;
+            color: #3B82F6;
+            margin-bottom: 10px;
+        }
+        .owner-section p {
+            margin: 8px 0;
+        }
+        .request-btn {
+            background: #3B82F6;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 20px auto 0;
+            width: fit-content;
+        }
+        .request-btn:hover {
+            background: #2563EB;
+            transform: translateY(-3px);
+        }
+        .alert {
+            background: #ffefeb;
+            color: #d9534f;
+            padding: 10px;
+            border-radius: 6px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        footer p {
+            font-size: 0.9em;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <%- include('header') %>
+    <div class="container">
+        <% if (locals.message) { %>
+            <div class="alert"><%= message %></div>
+        <% } %>
+
+        <div class="flat-details-card">
+            <div class="gallery">
+                <% flat.images.forEach(image => { %>
+                    <img src="<%= image %>" alt="Flat image">
+                <% }) %>
+            </div>
+            <div class="flat-details-content">
+                <h2><%= property.property_name %> - Flat <%= flat.flat_number %></h2>
+                <p><span>Size:</span> <%= flat.size %> sqft</p>
+                <p><span>Bedrooms:</span> <%= flat.bedrooms %></p>
+                <p><span>Bathrooms:</span> <%= flat.bathrooms %></p>
+                <p><span>Rent:</span> ৳<%= flat.rent.toLocaleString() %>/month</p>
+                <p><span>Address:</span> <%= property.address %>, <%= property.location_area %></p>
+            </div>
+        </div>
+
+        <div class="owner-section">
+            <h3>Owner Details</h3>
+            <p><span>Name:</span> <%= owner.name %></p>
+            <p><span>Email:</span> <%= owner.email %></p>
+            <p><span>Phone:</span> <%= owner.phone %></p>
+
+            <% if (user && user.username !== owner.username) { %>
+                <form action="/flats/<%= flat._id %>/request" method="POST">
+                    <input type="hidden" name="flatId" value="<%= flat._id %>">
+                    <input type="hidden" name="ownerUsername" value="<%= owner.username %>">
+                    <button type="submit" class="request-btn">Request for Rent</button>
+                </form>
+            <% } %>
+        </div>
+    </div>
+    <%- include('footer') %>
+</body>
+</html>

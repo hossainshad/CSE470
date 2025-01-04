@@ -8,7 +8,13 @@ const rentalRequestSchema = new mongoose.Schema({
     status: { type: String, enum: ['pending', 'accepted', 'rejected'], default: 'pending' },
     request_date: { type: Date, default: Date.now }
 });
+rentalRequestSchema.statics.getOwnerRequests = async function(ownerUsername) {
+    return await this.find({ owner_username: ownerUsername, status: 'pending' });
+};
 
+rentalRequestSchema.statics.rejectRequest = async function(requestId) {
+    return await this.findOneAndDelete({ request_id: requestId });
+};
 rentalRequestSchema.statics.createRequest = async function(requestData) {
     const newRequest = new this({
         request_id: Date.now(),

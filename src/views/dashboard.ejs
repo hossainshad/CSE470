@@ -23,8 +23,9 @@
                 <% if (role === 'owner') { %>
                     <li><a href="/owner/properties">My Properties</a></li>
                 <% } else if (role === "tenant") { %>
-                    <li><a href="/tenant/my-rentals">My Rentals</a></li>
+                    
                 <% } %>
+                <li><a href="/payment">My Rentals</a></li>
                 
                 <li><a href="/profile">Profile</a></li>
                 <li><a href="/logout">Logout</a></li>
@@ -82,9 +83,20 @@
                 </div>
             
                 <div class="card">
-                    <h3>Recent Activity</h3>
-                    <p>No recent activity to display.</p>
+                    <% if (ownerInfo) { %>
+                        <div class="owner-info">
+                            <h3>Owner Information</h3>
+                            <p>Name: <%= ownerInfo.name %></p>
+                            <p>Email: <%= ownerInfo.email %></p>
+                            <p>Phone: <%= ownerInfo.phone %></p>
+                            <!-- Add any other owner fields you want to display -->
+                        </div>
+                    <% } else if (message) { %>
+                        <p class="message"><%= message %></p>
+                    <% } %>
                 </div>
+                
+            </div>
             </div>
         </main>
     </div>

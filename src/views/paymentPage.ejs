@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Page</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/modal.css">
+</head>
+<body>
+    <div class="payment-container">
+        <header class="payment-header">
+            <h1>Payment Dashboard</h1>
+        </header>
+        
+        <main>
+            <% if (isOwner) { %>
+                <h2>Tenant Payment Status</h2>
+                <table>
+                    <tr>
+                        <th>Tenant Username</th>
+                        <th>Rent Amount</th>
+                        <th>Status</th>
+                    </tr>
+                    <% tenantPayments.forEach(tenant => { %>
+                        <tr>
+                            <td><%= tenant.tenant_username %></td>
+                            <td><%= tenant.rent_amount %></td>
+                            <td><%= tenant.status %></td>
+                        </tr>
+                    <% }) %>
+                </table>
+            <% } else { %>
+                <h2>Your Payment Status</h2>
+                <h3>Tenant: <%= rental.tenant_username %></h3>
+                <h3>Rental ID: <%= rental.rental_id %></h3>
+
+                <% const totalPaid = payment ? payment.reduce((sum, pay) => sum + pay.amount, 0) : 0; %> <!-- Sum of all payments -->
+                <% const remainingAmount = rental.rent_amount - totalPaid; %>
+
+                <h3>Your Monthly Rent: $<%= rental.rent_amount %></h3>
+                <h3>Amount Paid: $<%= totalPaid %></h3>
+
+                <% if (remainingAmount > 0) { %>
+                    <h3>Remaining Amount: $<%= remainingAmount %></h3>
+                    <!-- Payment Form -->
+                    <form action="/payment" method="POST">
+                        <div>
+                            <input type="number" name="amount" max="<%= remainingAmount %>" placeholder="Enter payment amount" required>
+                            <button type="submit">Pay</button>
+                        </div>
+                    </form>
+                <% } else { %>
+                    <h3>You have already paid the full amount for this month!</h3>
+                <% } %>
+            <% } %>
+            
+        </main>
+
+        <footer class="payment-footer">
+            <p>&copy; 2025 Your Rental Company. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>

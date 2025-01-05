@@ -42,7 +42,7 @@ const rentalRequestsModal = {
                 console.error('Error:', error);
             });
     },
-    
+
 
     displayRequests: function(requests) {
         const requestsList = document.getElementById('requestsList');
@@ -73,18 +73,28 @@ const rentalRequestsModal = {
     acceptRequest: function(requestId) {
         if (confirm('Are you sure you want to accept this request?')) {
             fetch(`/owner/accept-request/${requestId}`, {
-                method: 'POST'
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'same-origin'
             })
-            .then(function(response) {
-                if (response.ok) {
-                    rentalRequestsModal.fetchRequests();  // Refresh the list
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Reload the current page
+                    location.reload();
+                } else {
+                    alert(data.error || 'An error occurred');
                 }
             })
-            .catch(function(error) {
+            .catch(error => {
                 console.error('Error:', error);
+                alert('Failed to accept request');
             });
         }
     },
+    
     rejectRequest: function(requestId) {
         if (confirm('Are you sure you want to reject this request?')) {
             fetch(`/owner/reject-request/${requestId}`, {

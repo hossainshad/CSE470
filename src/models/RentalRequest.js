@@ -19,6 +19,11 @@ rentalRequestSchema.statics.rejectRequest = async function(requestId) {
     return await this.findOneAndDelete({ request_id: requestId });
 };
 rentalRequestSchema.statics.createRequest = async function(requestData) {
+    const hasPending = await this.hasPendingRequest(requestData.requester_username, requestData.flat_id);
+    if (hasPending) {
+        throw new Error('You already have a pending request for this flat');
+    }
+
     const newRequest = new this({
         request_id: Date.now(),
         flat_id: requestData.flat_id,
@@ -27,6 +32,14 @@ rentalRequestSchema.statics.createRequest = async function(requestData) {
         status: 'pending'
     });
     return await newRequest.save();
+};
+rentalRequestSchema.statics.hasPendingRequest = async function(username, flatId) {
+    const existingRequest = await this.findOne({
+        requester_username: username,
+        flat_id: flatId,
+        status: 'pending'
+    });
+    return existingRequest !== null;
 };
 
 rentalRequestSchema.statics.acceptRequest = async function(requestId) {

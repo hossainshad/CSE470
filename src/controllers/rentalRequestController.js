@@ -1,11 +1,12 @@
 import RentalRequest from '../models/RentalRequest.js';
 import Rentals from '../models/Rentals.js';
 import Flat from '../models/Flats.js';
-
+import User from "../models/User.js"
 export const acceptRentalRequest = async (req, res) => {
     try {
         const requestId = parseInt(req.params.requestId);
         const request = await RentalRequest.getRequestWithDetails(requestId);
+
         if (!request) {
             return res.status(404).json({ error: 'Request not found' });
         }
@@ -20,13 +21,21 @@ export const acceptRentalRequest = async (req, res) => {
             rent_amount: flat.rent,
             owner_username: request.owner_username
         };
+
+      
         await Rentals.createNewRental(rentalData);
 
         await Flat.updateFlatStatus(request.flat_id, request.requester_username);
 
+        await User.updateTenantStatus(request.requester_username, request.flat_id);
+
         await RentalRequest.acceptRequest(requestId);
 
-        res.json({ message: 'Request accepted successfully' });
+        res.json({ 
+            success: true,
+            message: 'Request accepted successfully'
+           
+        });
     } catch (error) {
         console.error('Error accepting request:', error);
         res.status(500).json({ error: 'Failed to accept request' });

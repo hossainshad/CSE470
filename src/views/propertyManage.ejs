@@ -272,22 +272,55 @@
             background: #2563EB;
         }
         .flat-images {
-            display: flex; /* Use flexbox for alignment */
-            justify-content: center; /* Center the image horizontally */
-            align-items: center; /* Center the image vertically */
-            height: 200px; /* Set a fixed height for the container */
-            overflow: hidden; /* Hide any overflow */
-            background-color: #f3f4f6; /* Optional: Add a subtle background color */
-            border-radius: 4px; /* Match the design style */
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+            height: 200px; 
+            overflow: hidden;
+            background-color: #f3f4f6;
+            border-radius: 4px;
         }
 
         .flat-images img {
-            max-width: 100%; /* Limit the width to the container */
-            max-height: 100%; /* Limit the height to the container */
-            object-fit: contain; /* Maintain aspect ratio and fit within bounds */
-            border-radius: 4px; /* Optional: Consistent border radius */
+            max-width: 100%; 
+            max-height: 100%;
+            object-fit: contain; 
+            border-radius: 4px;
             margin-bottom: 20px;
         }
+        .tenant-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+    }
+
+    .tenant-modal-content {
+        background: #FFFFFF;
+        border-radius: 12px;
+        padding: 2rem;
+        width: 90%;
+        max-width: 500px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .tenant-info-item {
+        margin-bottom: 1rem;
+        padding: 0.5rem;
+        border-bottom: 1px solid #E2E8F0;
+    }
+
+    .tenant-info-label {
+        font-weight: bold;
+        color: #1E293B;
+    }
     </style>
 </head>
 <body>
@@ -334,7 +367,7 @@
                         </span>
                     </div>
                     <div class="flat-images">
-                            <img src="<%= flat.images[0] %>" alt="Flat Image">
+                        <img src="<%= flat.images[0] %>" alt="Flat Image">
                     </div>
                     <div class="flat-details">
                         <span><i class="fas fa-expand"></i> Size: <%= flat.size %> sq ft</span>
@@ -342,21 +375,13 @@
                         <span><i class="fas fa-bath"></i> Bathrooms: <%= flat.bathrooms %></span>
                         <span><i class="fas fa-money-bill-wave"></i> Rent: ৳<%= flat.rent %></span>
                     </div>
-                    <div class="flat-actions">
-                        <button class="action-btn" onclick="editFlat('<%= flat._id %>')">
-                            <i class="fas fa-edit"></i> Edit
-                        </button>
-                        <% if (flat.status === 'vacant') { %>
-                            <button class="action-btn" onclick="addTenant('<%= flat._id %>')">
-                                <i class="fas fa-user-plus"></i> Add Tenant
-                            </button>
-                        <% } else { %>
-                            <button class="action-btn" onclick="viewTenant('<%= flat._id %>')">
+                    <% if (flat.status === 'occupied') { %>
+                        <div class="flat-actions">
+                            <button class="action-btn" onclick="viewTenantDetails('<%= flat._id %>')">
                                 <i class="fas fa-user"></i> View Tenant
                             </button>
-                        <% } %>
-                    </div>
-                    
+                        </div>
+                    <% } %>
                 </div>
             <% }); %>
         <% } else { %>
@@ -413,8 +438,63 @@
             </form>
         </div>
     </div>
+    <div id="tenantDetailsModal" class="tenant-modal">
+        <div class="tenant-modal-content">
+            <div class="modal-header">
+                <h3>Tenant Details</h3>
+                <button class="close-modal" onclick="closeTenantModal()">&times;</button>
+            </div>
+            <div id="tenantInfo"></div>
+        </div>
+    </div>
 
     <script>
+            function viewTenantDetails(flatId) {
+        const modal = document.getElementById('tenantDetailsModal');
+        const tenantInfo = document.getElementById('tenantInfo');
+        
+        fetch(`/api/flat/${flatId}/tenant`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.tenant) {
+                    tenantInfo.innerHTML = `
+                        <div class="tenant-info-item">
+                            <div class="tenant-info-label">Name</div>
+                            <div>${data.tenant.name}</div>
+                        </div>
+                        <div class="tenant-info-item">
+                            <div class="tenant-info-label">Email</div>
+                            <div>${data.tenant.email}</div>
+                        </div>
+                        <div class="tenant-info-item">
+                            <div class="tenant-info-label">Phone</div>
+                            <div>${data.tenant.phone}</div>
+                        </div>
+                    `;
+                } else {
+                    tenantInfo.innerHTML = '<p>No tenant information available.</p>';
+                }
+                modal.style.display = 'block';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                tenantInfo.innerHTML = '<p>Error loading tenant details.</p>';
+                modal.style.display = 'block';
+            });
+    }
+
+    function closeTenantModal() {
+        document.getElementById('tenantDetailsModal').style.display = 'none';
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+        const modal = document.getElementById('tenantDetailsModal');
+        if (event.target === modal) {
+            closeTenantModal();
+        }
+    }
+
         function openModal() {
             document.getElementById('addFlatModal').style.display = 'block';
         }

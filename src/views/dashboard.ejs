@@ -65,8 +65,7 @@
 
                 <% } %>
                 <li><a href="/payment">My Rentals</a></li>
-                
-                <li><a href="/profile">Profile</a></li>
+                <li><a href="/maintenance">Maintenance</a></li>
                 <li><a href="/logout">Logout</a></li>
             </ul>
         </nav>
@@ -128,6 +127,7 @@
                             <p>Name: <%= ownerInfo.name %></p>
                             <p>Email: <%= ownerInfo.email %></p>
                             <p>Phone: <%= ownerInfo.phone %></p>
+                            <p>Address: <%= ownerInfo.address %></p>
                         </div>
                     <% } else if (message) { %>
                         <p class="message"><%= message %></p>

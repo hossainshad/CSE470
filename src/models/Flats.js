@@ -11,8 +11,21 @@ const flatSchema = new mongoose.Schema({
     tenant_id: { type: String, default: null },
     images: [{ type: String }]
 });
+flatSchema.statics.getFlatDetails = async function(flatId) {
+    return await this.findOne({ _id: flatId });
+};
 
+flatSchema.statics.updateFlatStatus = async function(flatId, tenantId) {
+    return await this.updateOne(
+        { _id: flatId },
+        { 
+            status: 'occupied',
+            tenant_id: tenantId
+        }
+    );
+};
 const Flat = mongoose.model("Flat", flatSchema);
+
 
 export const FlatModel = {
     async getVacantFlats(propertyIds) {

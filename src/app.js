@@ -9,7 +9,8 @@ import homepageRoutes from "./routes/homeRoutes.js"
 import paymentRoutes from './routes/paymentRoutes.js';
 import session from 'express-session';
 import flatRoutes from './routes/flatRoutes.js';
-import ownerRoutes from './routes/ownerRoutes.js';
+import maintenanceRoutes from './routes/maintenanceRoutes.js';
+
 const app = express();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -28,13 +29,9 @@ app.use(session({
 }));
 
 
-// Setting EJS as the view engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-// app.get('/tenant/ownerInfo', OwnerController.showOwnerInfo);
-// app.get('/tenant/payment.ejs', (req, res) => {
-//     res.render('tenant/payment.ejs'); // Render the payment page (make sure this ejs file exists)
-// });
+
 
 
 // Routes
@@ -42,10 +39,11 @@ app.use(registerRoutes);
 app.use(loginRoutes);
 app.use(dashboardRoutes);
 app.use(homepageRoutes);
-app.use('/owner', ownerRoutes);
+
 app.use('/flats', flatRoutes);
 
 app.use(paymentRoutes);
+app.use(maintenanceRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));

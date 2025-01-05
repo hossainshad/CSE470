@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maintenance Requests</title>
+    <style>
+        /* Core Colors */
+        :root {
+            --primary: #1E293B;
+            --secondary: #475569;
+            --accent: #3B82F6;
+            --background-light: #F8FAFC;
+            --background-dark: #1E293B;
+            --surface: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #64748B;
+            --text-light: #F8FAFC;
+            --border: #E2E8F0;
+            --input-focus: #3B82F6;
+            --error: #EF4444;
+            --success: #10B981;
+            --primary-gradient: linear-gradient(145deg, #1E293B, #475569);
+            --accent-gradient: linear-gradient(to right, #3B82F6, #2563EB);
+        }
+
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--background-light);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1, h2 {
+            color: var(--primary);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background-color: var(--primary);
+            color: var(--text-light);
+        }
+
+        tr:hover {
+            background-color: var(--secondary);
+        }
+
+        button {
+            background-color: var(--accent);
+            color: var(--text-light);
+            border: none;
+            padding: 10px 20px;
+            margin: 10px 0;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: var(--primary);
+        }
+
+        .request-form {
+            display: none;
+            margin-top: 20px;
+            background-color: var(--surface);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        textarea:focus {
+            border-color: var(--input-focus);
+        }
+
+        /* Button Styles for Tables */
+        .actions button {
+            background-color: var(--secondary);
+            color: var(--text-light);
+            padding: 8px 16px;
+            font-size: 12px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .actions button:hover {
+            background-color: var(--primary);
+        }
+
+        /* Tenant Section */
+        .tenant-table {
+            margin-top: 20px;
+        }
+
+        /* Owner Section */
+        .owner-table {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Maintenance Requests</h1>
+
+        <% if (user && user.o_flag) { %>
+            <!-- Owner Section -->
+            <h2>Requests for Your Properties</h2>
+            <% if (maintenanceRequests.length > 0) { %>
+                <table class="owner-table">
+                    <thead>
+                        <tr>
+                            <th>Tenant Username</th>
+                            <th>Message</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% maintenanceRequests.forEach(request => { %>
+                            <% if (request.status !== 'Completed') { %> <!-- Exclude completed requests -->
+                                <tr>
+                                    <td><%= request.tenant_username %></td>
+                                    <td><%= request.description %></td>
+                                    <td class="actions">
+                                        <% if (request.status === 'Pending') { %>
+                                            <form action="/maintenance/approve/<%= request._id %>" method="POST" style="display:inline;">
+                                                <button type="submit">Approve</button>
+                                            </form>
+                                            <form action="/maintenance/decline/<%= request._id %>" method="POST" style="display:inline;">
+                                                <button type="submit" class="decline-btn">Decline</button>
+                                            </form>
+                                        <% } else if (request.status === 'Approved') { %>
+                                            <p>Approved</p>
+                                        <% } else if (request.status === 'Declined') { %>
+                                            <p>Declined</p>
+                                        <% } %>
+                                    </td>
+                                </tr>
+                            <% } %>
+                        <% }) %>
+                    </tbody>
+                </table>
+            <% } else { %>
+                <p>No maintenance requests for your properties at the moment.</p>
+            <% } %>
+        <% } else if (user && user.t_flag) { %>
+            <!-- Tenant Section -->
+            <h2>Your Maintenance Requests</h2>
+            
+            <button class="make-request-btn" onclick="document.getElementById('maintenanceForm').style.display='block'">Make Request</button>
+            
+            <div id="maintenanceForm" class="request-form">
+                <form method="POST" action="/submit-maintenance-request">
+                    <textarea name="description" placeholder="Enter your maintenance request" required></textarea>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+            
+            <% if (maintenanceRequests.length > 0) { %>
+                <table class="tenant-table">
+                    <thead>
+                        <tr>
+                            <th>Request</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% maintenanceRequests.forEach(request => { %>
+                            <% if (request.status !== 'Completed') { %> <!-- Exclude completed requests -->
+                                <tr>
+                                    <td><%= request.description %></td>
+                                    <td><%= request.status %></td>
+                                    <td class="actions">
+                                        <% if (request.status === 'Approved') { %>
+                                            <form action="/maintenance/completed/<%= request._id %>" method="POST" style="display:inline;">
+                                                <button type="submit">Mark as Completed</button>
+                                            </form>
+                                        <% } else if (request.status === 'Declined') { %>
+                                            <p>Request Declined</p>
+                                        <% } else if (request.status === 'Ongoing') { %>
+                                            <p>Maintenance is ongoing</p>
+                                        <% } %>
+                                    </td>
+                                </tr>
+                            <% } %>
+                        <% }) %>
+                    </tbody>
+                </table>
+            <% } else { %>
+                <p>You have no maintenance requests at the moment.</p>
+            <% } %>
+        <% } else { %>
+            <p>You must be logged in as either an owner or tenant to view maintenance requests.</p>
+        <% } %>
+    </div>
+
+</body>
+</html>

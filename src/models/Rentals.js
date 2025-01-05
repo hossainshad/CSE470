@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import User from './User.js';  // Add this import
 
 const RentalSchema = new mongoose.Schema({
     rental_id: Number,
@@ -18,7 +19,14 @@ RentalSchema.statics.createNewRental = async function(rentalData) {
         status: 'active',
         owner_username: rentalData.owner_username
     });
-    return await newRental.save();
+    await newRental.save();  // Remove the return here
+    
+    const updatedUser = await User.findOne({ username: rentalData.tenant_username });
+    
+    return {
+        rental: newRental,
+        user: updatedUser
+    };
 };
 
 const Rentals = mongoose.model('Rentals', RentalSchema);

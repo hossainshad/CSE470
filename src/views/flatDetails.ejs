@@ -107,6 +107,20 @@
             font-size: 0.9em;
             color: #777;
         }
+        .tenant-notice {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            margin: 20px 0;
+            color: #6c757d;
+        }
+        .tenant-notice i {
+            color: #ffc107;
+            margin-right: 8px;
+        }
+
     </style>
 </head>
 <body>
@@ -137,13 +151,41 @@
             <p><span>Name:</span> <%= owner.name %></p>
             <p><span>Email:</span> <%= owner.email %></p>
             <p><span>Phone:</span> <%= owner.phone %></p>
-
+        
+            <% if (message) { %>
+                <div class="alert alert-success">
+                    <i class="fas fa-check-circle"></i>
+                    <%= message %>
+                </div>
+            <% } %>
+        
+            <% if (error) { %>
+                <div class="alert alert-error">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <%= error %>
+                </div>
+            <% } %>
+        
             <% if (user && user.username !== owner.username) { %>
-                <form action="/flats/<%= flat._id %>/request" method="POST">
-                    <input type="hidden" name="flatId" value="<%= flat._id %>">
-                    <input type="hidden" name="ownerUsername" value="<%= owner.username %>">
-                    <button type="submit" class="request-btn">Request for Rent</button>
-                </form>
+                <% if (!user.t_flag) { %>
+                    <% if (pendingRequest) { %>
+                        <div class="tenant-notice">
+                            <i class="fas fa-info-circle"></i>
+                            You already have a pending request for this flat. Please wait for the owner's response.
+                        </div>
+                    <% } else { %>
+                        <form action="/flats/<%= flat._id %>/request" method="POST">
+                            <input type="hidden" name="flatId" value="<%= flat._id %>">
+                            <input type="hidden" name="ownerUsername" value="<%= owner.username %>">
+                            <button type="submit" class="request-btn">Request for Rent</button>
+                        </form>
+                    <% } %>
+                <% } else { %>
+                    <div class="tenant-notice">
+                        <i class="fas fa-info-circle"></i>
+                        You are already renting a flat. You must end your current rental agreement before requesting a new flat.
+                    </div>
+                <% } %>
             <% } %>
         </div>
     </div>

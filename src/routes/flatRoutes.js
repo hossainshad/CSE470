@@ -7,28 +7,34 @@ import RentalRequest from '../models/RentalRequest.js';
 
 const router = express.Router();
 
-// View flat details
 const viewFlatDetails = async (req, res) => {
     try {
         const flatId = req.params.id;
         
-        // Get flat details
         const flat = await Flat.findById(flatId);
         if (!flat) {
             return res.render('error', { message: 'Flat not found' });
         }
 
-        // Get property details
         const property = await Property.findOne({ p_id: flat.property_id });
         if (!property) {
             return res.render('error', { message: 'Property not found' });
         }
 
-        // Get owner details
         const owner = await User.findOne({ username: property.owner_username });
         if (!owner) {
             return res.render('error', { message: 'Owner not found' });
         }
+
+        // Check for pending request
+        let pendingRequest = false;
+        if (req.session.user) {
+            pendingRequest = await RentalRequest.hasPendingRequest(req.session.user.username, flatId);
+        }
+
+        // Add error/success message from query params
+        const message = req.query.message;
+        const error = req.query.error;
 
         res.render('flatDetails', {
             flat,
@@ -39,7 +45,10 @@ const viewFlatDetails = async (req, res) => {
                 phone: owner.phone,
                 username: owner.username
             },
-            user: req.session.user
+            user: req.session.user,
+            pendingRequest,
+            message,
+            error
         });
 
     } catch (error) {
@@ -48,13 +57,11 @@ const viewFlatDetails = async (req, res) => {
     }
 };
 
-// Handle rent request
 const submitRentRequest = async (req, res) => {
     try {
         const { flatId, ownerUsername } = req.body;
         const requesterUsername = req.session.user.username;
 
-        // Create rental request
         await RentalRequest.createRequest({
             flat_id: flatId,
             requester_username: requesterUsername,
@@ -65,11 +72,15 @@ const submitRentRequest = async (req, res) => {
 
     } catch (error) {
         console.error('Error:', error);
-        res.redirect(`/flats/${req.body.flatId}?error=Failed to send request`);
+        // Check for specific error from model
+        if (error.message === 'You already have a pending request for this flat') {
+            res.redirect(`/flats/${req.body.flatId}?error=${error.message}`);
+        } else {
+            res.redirect(`/flats/${req.body.flatId}?error=Failed to send request`);
+        }
     }
 };
 
-// Routes
 router.get('/:id', requireAuth, viewFlatDetails);
 router.post('/:id/request', requireAuth, submitRentRequest);
 

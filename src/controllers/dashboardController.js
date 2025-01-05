@@ -107,8 +107,27 @@ export const dashboard = async (req, res) => {
         });
     }
 };
+export const getTenantDetails = async (req, res) => {
+    try {
+        const flatId = req.params.flatId;
+        const tenant = await User.getTenantDetails(flatId);
+        
+        if (!tenant) {
+            return res.status(404).json({ error: 'Tenant not found' });
+        }
 
-// Controller for managing individual properties
+        const tenantInfo = {
+            name: tenant.name,
+            email: tenant.email,
+            phone: tenant.phone
+        };
+
+        res.json({ tenant: tenantInfo });
+    } catch (error) {
+        console.error('Error fetching tenant details:', error);
+        res.status(500).json({ error: 'Error fetching tenant details' });
+    }
+};
 export const manageProperty = async (req, res) => {
     const user = req.session.user;
     const propertyId = req.params.p_id;

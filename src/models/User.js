@@ -1,4 +1,3 @@
-// models/User.js
 import mongoose from 'mongoose';
 
 const UserSchema = new mongoose.Schema({
@@ -10,7 +9,7 @@ const UserSchema = new mongoose.Schema({
   address: { type: String, required: true },
   o_flag: { type: Boolean, default: false },
   t_flag: { type: Boolean, default: false },
-  tenant_flat_id: { type: Number, default: null },
+  tenant_flat_id: { type: String, default: null }
 });
 
 UserSchema.statics.registerNewUser = async function(userData) {
@@ -38,7 +37,9 @@ UserSchema.statics.registerNewUser = async function(userData) {
   await newUser.save();
   return newUser;
 };
-
+UserSchema.statics.getTenantDetails = async function(flatId) {
+  return await this.findOne({ tenant_flat_id: flatId.toString() });
+};
 
 
 UserSchema.statics.loginUser = async function(username, password) {
@@ -52,7 +53,28 @@ UserSchema.statics.loginUser = async function(username, password) {
     throw new Error('Invalid password');
   }
   return user;
-};  
+};
+UserSchema.statics.getUserById = async function (userId) {
+  return await this.findById(userId);
+};
+
+
+UserSchema.statics.updateTenantStatus = async function(username, flatId) {
+  const updatedUser = await this.findOneAndUpdate(
+      { username: username },
+      { 
+          t_flag: true,
+          tenant_flat_id: flatId.toString()
+      },
+      { new: true }
+  );
+  
+  if (!updatedUser) {
+      throw new Error('User not found');
+  }
+  
+  return updatedUser;
+};
 
 const User = mongoose.model('User', UserSchema);
 

@@ -94,7 +94,7 @@ export const handlePayment = async (req, res) => {
             return res.status(400).send(`Payment exceeds the remaining amount. You owe $${remainingAmount}.`);
         }
 
-       
+        // Create a new payment record
         await Payments.create({
             rental_id: rental.rental_id,
             amount,
@@ -105,7 +105,7 @@ export const handlePayment = async (req, res) => {
             tenant_username: rental.tenant_username,
         });
 
-        
+        // Redirect to the payment page with a success message
         res.redirect('/payment');
     } catch (error) {
         console.error('Error processing payment:', error);

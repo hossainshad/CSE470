@@ -1,0 +1,120 @@
+:root {
+    --primary: #1E293B;
+    --secondary: #475569;
+    --accent: #3B82F6;
+    --background-light: #F8FAFC;
+    --background-dark: #1E293B;
+    --surface: #FFFFFF;
+    --text-primary: #1E293B;
+    --text-secondary: #64748B;
+    --text-light: #F8FAFC;
+    --border: #E2E8F0;
+    --error: #EF4444;
+    --success: #10B981;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-light);
+    color: var(--text-primary);
+}
+
+
+h1, h2 {
+    color: var(--primary);
+    padding: 20px
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    text-align: left;
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--border);
+}
+
+th {
+    background-color: var(--secondary);
+    color: var(--text-light);
+}
+
+tr:hover {
+    background-color: var(--background-dark);
+    color: var(--text-light);
+}
+
+button {
+    background-color: var(--accent);
+    color: var(--text-light);
+    border: none;
+    padding: 10px 20px;
+    margin: 10px 0;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: var(--primary);
+}
+
+.request-form {
+    display: none;
+    margin-top: 20px;
+    background-color: var(--surface);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+textarea:focus {
+    border-color: var(--input-focus);
+}
+
+
+.actions button {
+    background-color: var(--secondary);
+    color: var(--text-light);
+    padding: 8px 16px;
+    font-size: 12px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.actions button:hover {
+    background-color: var(--primary);
+}
+
+
+.tenant-table {
+    margin-top: 20px;
+}
+
+
+.owner-table {
+    margin-top: 20px;
+}
+
+.make-request-btn{
+    margin-left: 20px;
+}

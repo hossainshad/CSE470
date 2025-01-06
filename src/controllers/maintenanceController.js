@@ -4,7 +4,7 @@ import Rentals from "../models/Rentals.js"; // Rentals model
 // Controller to fetch maintenance requests
 export const getMaintenanceRequests = async (req, res) => {
     try {
-        const user = req.session.user; // Ensure user is from session
+        const user = req.session.user;
 
         // Check if user is authenticated
         if (!user) {
@@ -15,24 +15,26 @@ export const getMaintenanceRequests = async (req, res) => {
 
         // Fetch maintenance requests based on the user's role (owner/tenant)
         if (user.o_flag) {
-            // Owner: Fetch maintenance requests directed to the owner
-            maintenanceRequests = await Maintenance.find({ owner_username: user.username });
-        } else if (user.t_flag) {
-            // Tenant: Fetch maintenance requests created by the tenant
-            maintenanceRequests = await Maintenance.find({ tenant_username: user.username });
+            maintenanceRequests = await Maintenance.find({ owner_username: user.username }).lean();
+        }if (user.t_flag) {
+            maintenanceRequests = await Maintenance.find({ tenant_username: user.username }).lean();
+
         }
 
-        // Render the page with the maintenance requests
+        // Ensure maintenanceRequests is always an array
+        if (!Array.isArray(maintenanceRequests)) {
+            maintenanceRequests = [];
+        }
+
         res.render('maintenanceRequestsPage', { 
             user, 
-            maintenanceRequests 
+            maintenanceRequests
         });
     } catch (error) {
         console.error('Error fetching maintenance requests:', error);
         res.status(500).send('Server error');
     }
 };
-// Controller for submitting a maintenance request
 
 export const submitMaintenanceRequest = async (req, res) => {
     try {

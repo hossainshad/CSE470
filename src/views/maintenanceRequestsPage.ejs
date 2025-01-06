@@ -13,95 +13,123 @@
 
         <% if (user && user.o_flag) { %>
             <!-- Owner Section -->
-            <h2>Maintenance Requests for Your Properties</h2>
-            <% if (maintenanceRequests.length > 0) { %>
-                <table class="owner-table">
-                    <thead>
-                        <tr>
-                            <th>Tenant Username</th>
-                            <th>Message</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% maintenanceRequests.forEach(request => { %>
-                            <% if (request.status !== 'Completed') { %> <!-- Exclude completed requests -->
-                                <tr>
-                                    <td><%= request.tenant_username %></td>
-                                    <td><%= request.description %></td>
-                                    <td class="actions">
-                                        <% if (request.status === 'Pending') { %>
-                                            <form action="/maintenance/approve/<%= request._id %>" method="POST" style="display:inline;">
-                                                <button type="submit">Approve</button>
-                                            </form>
-                                            <form action="/maintenance/decline/<%= request._id %>" method="POST" style="display:inline;">
-                                                <button type="submit" class="decline-btn">Decline</button>
-                                            </form>
-                                        <% } else if (request.status === 'Approved') { %>
-                                            <p>Approved</p>
-                                        <% } else if (request.status === 'Declined') { %>
-                                            <p>Declined</p>
-                                        <% } %>
-                                    </td>
-                                </tr>
-                            <% } %>
-                        <% }) %>
-                    </tbody>
-                </table>
-            <% } else { %>
-                <h2>There is no Request at this time</h2>
-            <% } %>
-        <% } else if (user && user.t_flag) { %>
-            <!-- Tenant Section -->
-            <h2>Your Maintenance Requests</h2>
-            
-            <button class="make-request-btn" onclick="document.getElementById('maintenanceForm').style.display='block'">Make Request</button>
-            
-            <div id="maintenanceForm" class="request-form">
-                <form method="POST" action="/submit-maintenance-request">
-                    <textarea name="description" placeholder="Enter your maintenance request" required></textarea>
-                    <button type="submit">Submit</button>
-                </form>
+            <div class="owner-section">
+                <h2>Incoming Maintenance Requests</h2>
+                <% if (maintenanceRequests.filter(req => req.owner_username === user.username).length > 0) { %>
+                    <table class="owner-table">
+                        <thead>
+                            <tr>
+                                <th>Tenant Username</th>
+                                <th>Message</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% maintenanceRequests.filter(req => req.owner_username === user.username).forEach(request => { %>
+                                <% if (request.status !== 'Completed') { %>
+                                    <tr>
+                                        <td><%= request.tenant_username %></td>
+                                        <td><%= request.description %></td>
+                                        <td class="actions">
+                                            <% if (request.status === 'Pending') { %>
+                                                <form action="/maintenance/approve/<%= request._id %>" method="POST" style="display:inline;">
+                                                    <button type="submit">Approve</button>
+                                                </form>
+                                                <form action="/maintenance/decline/<%= request._id %>" method="POST" style="display:inline;">
+                                                    <button type="submit" class="decline-btn">Decline</button>
+                                                </form>
+                                            <% } else if (request.status === 'Approved') { %>
+                                                <p>Approved</p>
+                                            <% } else if (request.status === 'Declined') { %>
+                                                <p>Declined</p>
+                                            <% } %>
+                                        </td>
+                                    </tr>
+                                <% } %>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                <% } else { %>
+                    <p>No incoming maintenance requests at this time</p>
+                <% } %>
             </div>
-            
-            <% if (maintenanceRequests.length > 0) { %>
-                <table class="tenant-table">
-                    <thead>
-                        <tr>
-                            <th>Request</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% maintenanceRequests.forEach(request => { %>
-                            <% if (request.status !== 'Completed') { %> <!-- Exclude completed requests -->
-                                <tr>
-                                    <td><%= request.description %></td>
-                                    <td><%= request.status %></td>
-                                    <td class="actions">
-                                        <% if (request.status === 'Approved') { %>
-                                            <form action="/maintenance/completed/<%= request._id %>" method="POST" style="display:inline;">
-                                                <button type="submit">Mark as Completed</button>
-                                            </form>
-                                        <% } else if (request.status === 'Declined') { %>
-                                            <p>Request Declined</p>
-                                        <% } else if (request.status === 'Ongoing') { %>
-                                            <p>Maintenance is ongoing</p>
-                                        <% } %>
-                                    </td>
-                                </tr>
-                            <% } %>
-                        <% }) %>
-                    </tbody>
-                </table>
-            <% } else { %>
-                <h2>You do not have any maintenance request</h2>
-            <% } %>
-        <% } else { %>
+        <% } %>
+
+        <% if (user && user.t_flag) { %>
+            <!-- Tenant Section -->
+            <div class="tenant-section">
+                <h2>Your Maintenance Requests</h2>
+                
+                <button class="make-request-btn" onclick="document.getElementById('maintenanceForm').style.display='block'">Make Request</button>
+                
+                <div id="maintenanceForm" class="request-form">
+                    <form method="POST" action="/submit-maintenance-request">
+                        <textarea name="description" placeholder="Enter your maintenance request" required></textarea>
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
+                
+                <% if (maintenanceRequests.filter(req => req.tenant_username === user.username).length > 0) { %>
+                    <table class="tenant-table">
+                        <thead>
+                            <tr>
+                                <th>Request</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% maintenanceRequests.filter(req => req.tenant_username === user.username).forEach(request => { %>
+                                <% if (request.status !== 'Completed') { %> 
+                                    <tr>
+                                        <td><%= request.description %></td>
+                                        <td><%= request.status %></td>
+                                        <td class="actions">
+                                            <% if (request.status === 'Approved') { %>
+                                                <form action="/maintenance/completed/<%= request._id %>" method="POST" style="display:inline;">
+                                                    <button type="submit">Mark as Completed</button>
+                                                </form>
+                                            <% } else if (request.status === 'Declined') { %>
+                                                <p>Request Declined</p>
+                                            <% } else if (request.status === 'Ongoing') { %>
+                                                <p>Maintenance is ongoing</p>
+                                            <% } %>
+                                        </td>
+                                    </tr>
+                                <% } %>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                <% } else { %>
+                    <p>You do not have any maintenance requests</p>
+                <% } %>
+            </div>
+        <% } %>
+
+        <% if (!user || (!user.o_flag && !user.t_flag)) { %>
             <p>You must be logged in as either an owner or tenant to view maintenance requests.</p>
         <% } %>
     </div>
     <%- include('footer') %>
+
+    <style>
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .owner-section, .tenant-section {
+            margin-bottom: 40px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        .owner-section h2, .tenant-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+    </style>
 </body>
 </html>

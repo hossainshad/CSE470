@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import User from './User.js';  // Add this import
+import User from './User.js'; 
 
 const RentalSchema = new mongoose.Schema({
     rental_id: Number,
@@ -19,7 +19,7 @@ RentalSchema.statics.createNewRental = async function(rentalData) {
         status: 'active',
         owner_username: rentalData.owner_username
     });
-    await newRental.save();  // Remove the return here
+    await newRental.save();  
     
     const updatedUser = await User.findOne({ username: rentalData.tenant_username });
     
@@ -28,6 +28,23 @@ RentalSchema.statics.createNewRental = async function(rentalData) {
         user: updatedUser
     };
 };
+RentalSchema.statics.getOwnerTenants = async function(owner_username) {
+    return await this.find({ owner_username });
+};
+RentalSchema.statics.getTenantRental = async function(tenant_username) {
+    return await this.findOne({ tenant_username });
+};
+RentalSchema.statics.getPaymentStatus = async function(rental, payments) {
+    const totalPaid = payments.reduce((sum, pay) => sum + pay.amount, 0);
+    return {
+        tenant_username: rental.tenant_username,
+        rent_amount: rental.rent_amount,
+        totalPaid,
+        remainingAmount: rental.rent_amount - totalPaid,
+        status: totalPaid >= rental.rent_amount ? 'Paid' : 'Unpaid'
+    };
+};
+
 
 const Rentals = mongoose.model('Rentals', RentalSchema);
 

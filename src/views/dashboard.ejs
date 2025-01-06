@@ -59,10 +59,9 @@
             </div>
             <ul class="nav-menu">
                 <li><a href="/owner/add-property">Add Property</a></li>
-                <% if (role === 'owner') { %>
+                <% if (role === 'owner'|| role==="ot") { %>
                     <li><a href="#" id="showRequestsBtn">Rent Requests</a></li>
                 <% } else if (role === "tenant") { %>
-
                 <% } %>
                 <li><a href="/payment">My Rentals</a></li>
                 <li><a href="/maintenance">Maintenance</a></li>

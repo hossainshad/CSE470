@@ -3,63 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment Page</title>
+    <title>My Rentals</title>
     <link rel="stylesheet" href="/css/payment.css">
-
 </head>
 <body>
     <%- include('header') %>
     <div class="payment-container">
         <header class="payment-header">
-            <h1>Payment Dashboard</h1>
+            <h1>My Rentals</h1>
         </header>
         
         <main>
-            <% if (isOwner ) { %>
-                <h2>Tenant Payment Status</h2>
+            <!-- Owner's Tenant List -->
+            <% if (isOwner && tenantPayments.length > 0) { %>
+                <h2>Your Tenants' Payment Status</h2>
                 <table>
                     <tr>
                         <th>Tenant Username</th>
                         <th>Rent Amount</th>
+                        <th>Amount Paid</th>
                         <th>Status</th>
                     </tr>
                     <% tenantPayments.forEach(tenant => { %>
                         <tr>
                             <td><%= tenant.tenant_username %></td>
-                            <td><%= tenant.rent_amount %></td>
+                            <td>$<%= tenant.rent_amount %></td>
+                            <td>$<%= tenant.totalPaid %></td>
                             <td><%= tenant.status %></td>
                         </tr>
                     <% }) %>
                 </table>
-            <% } if(user.t_flag) { %>
-                
-                <% const totalPaid = payment ? payment.reduce((sum, pay) => sum + pay.amount, 0) : 0; %>
-                <% const remainingAmount = rental.rent_amount - totalPaid; %>
-    
-                <% if (remainingAmount <= 0) { %>
-                    <div class="payment-status-box">
-                        <h2>Your Payment Status</h2>
-                        <h3>Your Monthly Rent: $<%= rental.rent_amount %></h3>
-                        <h3>Amount Paid: $<%= totalPaid %></h3>
+            <% } %>
+
+            <!-- User's Payment Section (if they are a tenant) -->
+            <% if (isTenant && tenantData) { %>
+                <div class="payment-status-box">
+                    <h2>Your Rent Payment</h2>
+                    <h3>Your Monthly Rent: $<%= tenantData.rental.rent_amount %></h3>
+                    <h3>Amount Paid: $<%= tenantData.totalPaid %></h3>
+                    
+                    <% if (tenantData.remainingAmount <= 0) { %>
                         <div class="payment-success-box">
                             <h3>✅ You have already paid the full amount for this month!</h3>
                         </div>
-                    </div>
-                <% } else { %>
-                    <div class="payment-status-box">
-                        <h2>Your Payment Status</h2>
-                        <h3>Your Monthly Rent: $<%= rental.rent_amount %></h3>
-                        <h3>Amount Paid: $<%= totalPaid %></h3>
-                        <h3>Remaining Amount: $<%= remainingAmount %></h3>
+                    <% } else { %>
+                        <h3>Remaining Amount: $<%= tenantData.remainingAmount %></h3>
                         <form action="/payment" method="POST">
                             <div class="form-group">
                                 <label for="amount">Amount to Pay</label>
-                                <input type="number" id="amount" name="amount" min="1" max="<%= remainingAmount %>" required>
+                                <input type="number" 
+                                       id="amount" 
+                                       name="amount" 
+                                       min="1" 
+                                       max="<%= tenantData.remainingAmount %>" 
+                                       required>
                             </div>
                             <button type="submit" class="pay-button">Pay Now</button>
                         </form>
-                    </div>
-                <% } %>
+                    <% } %>
+                </div>
             <% } %>
         </main>
     

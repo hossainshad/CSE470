@@ -72,7 +72,6 @@ const submitRentRequest = async (req, res) => {
 
     } catch (error) {
         console.error('Error:', error);
-        // Check for specific error from model
         if (error.message === 'You already have a pending request for this flat') {
             res.redirect(`/flats/${req.body.flatId}?error=${error.message}`);
         } else {

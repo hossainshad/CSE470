@@ -3,57 +3,59 @@ import Payments from '../models/Payments.js';
 
 export const paymentPage = async (req, res) => {
     const user = req.session.user;
+    const currentMonth = new Date().getMonth() + 1;
+    const currentYear = new Date().getFullYear();
 
     try {
+        let tenantPayments = [];
+        let tenantData = null;
+
         if (user.o_flag) {
-            // Fetch tenants' rent statuses for owners
-            const tenants = await Rentals.find({ owner_username: user.username });
-            const tenantPayments = await Promise.all(tenants.map(async rental => {
-                // Fetch all payments for this tenant in the current month
+            const ownedRentals = await Rentals.find({ owner_username: user.username });
+            tenantPayments = await Promise.all(ownedRentals.map(async rental => {
                 const payments = await Payments.find({
                     rental_id: rental.rental_id,
-                    payment_month: new Date().getMonth() + 1,
-                    payment_year: new Date().getFullYear(),
+                    payment_month: currentMonth,
+                    payment_year: currentYear,
                 });
                 
                 const totalPaid = payments.reduce((sum, pay) => sum + pay.amount, 0);
-                const status = totalPaid >= rental.rent_amount ? 'Paid' : 'Unpaid';
-
                 return {
                     tenant_username: rental.tenant_username,
                     rent_amount: rental.rent_amount,
-                    status,
+                    totalPaid,
+                    status: totalPaid >= rental.rent_amount ? 'Paid' : 'Unpaid'
                 };
             }));
-            res.render('paymentPage', { user, tenantPayments, isOwner: true });
-        } else if (user.t_flag) {
-            // Fetch tenant's own payment status
-            const rental = await Rentals.findOne({ tenant_username: user.username });
-            if (!rental) {
-                return res.status(404).send('No rental agreement found for this user.');
-            }
+        }
 
-            // Fetch all payments for the tenant for the current month
+        const userRental = await Rentals.findOne({ tenant_username: user.username });
+        if (userRental) {
             const payments = await Payments.find({
-                rental_id: rental.rental_id,
-                payment_month: new Date().getMonth() + 1,
-                payment_year: new Date().getFullYear(),
+                rental_id: userRental.rental_id,
+                payment_month: currentMonth,
+                payment_year: currentYear,
             });
 
             const totalPaid = payments.reduce((sum, pay) => sum + pay.amount, 0);
-            const remainingAmount = rental.rent_amount - totalPaid;
+            const remainingAmount = userRental.rent_amount - totalPaid;
 
-            res.render('paymentPage', {
-                user,
-                rental,
-                payment: payments,
+            tenantData = {
+                rental: userRental,
+                payments,
                 totalPaid,
-                remainingAmount,
-                isOwner: false,
-            });
-        } else {
-            res.status(403).send('Access Denied');
+                remainingAmount
+            };
         }
+
+        res.render('paymentPage', {
+            user,
+            tenantPayments,
+            tenantData,
+            isOwner: user.o_flag,
+            isTenant: !!userRental 
+        });
+
     } catch (err) {
         console.error(err);
         res.status(500).send('Server Error');
@@ -63,12 +65,8 @@ export const paymentPage = async (req, res) => {
 export const handlePayment = async (req, res) => {
     try {
         const user = req.session.user;
-
-        if (!user.t_flag) {
-            return res.status(403).send('Unauthorized access');
-        }
-
         const { amount } = req.body;
+        
         const rental = await Rentals.findOne({ tenant_username: user.username });
         if (!rental) {
             return res.status(404).send('No rental agreement found for this user.');
@@ -77,7 +75,6 @@ export const handlePayment = async (req, res) => {
         const currentMonth = new Date().getMonth() + 1;
         const currentYear = new Date().getFullYear();
 
-        // Check if the payment already exists for this month
         const existingPayments = await Payments.find({
             rental_id: rental.rental_id,
             payment_month: currentMonth,
@@ -85,19 +82,16 @@ export const handlePayment = async (req, res) => {
             tenant_username: user.username,
         });
 
-        // Calculate the total paid so far
         const totalPaid = existingPayments.reduce((sum, payment) => sum + payment.amount, 0);
         const remainingAmount = rental.rent_amount - totalPaid;
 
-        // Validate payment amount
         if (amount > remainingAmount) {
             return res.status(400).send(`Payment exceeds the remaining amount. You owe $${remainingAmount}.`);
         }
 
-        // Create a new payment record
-        await Payments.create({
+        const newPayment = new Payments({
             rental_id: rental.rental_id,
-            amount,
+            amount: Number(amount),
             payment_month: currentMonth,
             payment_year: currentYear,
             paid_date: new Date(),
@@ -105,11 +99,10 @@ export const handlePayment = async (req, res) => {
             tenant_username: rental.tenant_username,
         });
 
-        // Redirect to the payment page with a success message
+        await newPayment.save();
         res.redirect('/payment');
     } catch (error) {
         console.error('Error processing payment:', error);
         res.status(500).send('Internal server error');
     }
 };
-

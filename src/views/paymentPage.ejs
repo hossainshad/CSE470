@@ -15,7 +15,7 @@
         </header>
         
         <main>
-            <% if (isOwner) { %>
+            <% if (isOwner ) { %>
                 <h2>Tenant Payment Status</h2>
                 <table>
                     <tr>
@@ -31,7 +31,7 @@
                         </tr>
                     <% }) %>
                 </table>
-            <% } else { %>
+            <% } if(user.t_flag) { %>
                 
                 <% const totalPaid = payment ? payment.reduce((sum, pay) => sum + pay.amount, 0) : 0; %>
                 <% const remainingAmount = rental.rent_amount - totalPaid; %>

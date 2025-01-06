@@ -54,7 +54,7 @@
                 <h2><%= user.username %></h2>
                 
                 <%var role = 'None';if (user.o_flag && user.t_flag){role = 'ot' } else if (user.o_flag){ role= "owner"} else {role = "tenant"}
-                console.log(user) %>
+                console.log(role) %>
                 <p> Browse Properties</p>
             </div>
             <ul class="nav-menu">
@@ -79,7 +79,7 @@
             <div class="dashboard-cards">
                 <div class="card">
                     <h3>My Properties</h3>
-                    <% if (role === 'owner') { %>
+                    <% if (role === 'owner'|| role=="ot") { %>
                         <% if (properties && properties.length > 0) { %>
                             <div class="properties-grid">
                                 <% properties.forEach(property => { %>

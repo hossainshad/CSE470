@@ -11,7 +11,7 @@
     <div class="container">
         <h1>Maintenance Requests</h1>
 
-        <% if (user && user.o_flag) {console.log(maintenanceRequests)  %>
+        <% if (user && user.o_flag) { %>
             <div class="owner-section">
                 <h2>Incoming Maintenance Requests</h2>
                 <table class="owner-table">
@@ -23,7 +23,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <% maintenanceRequests.forEach(request => {%>
+                        <% ownerRequests.forEach(request => {%>
                             <% if (request.owner_username === user.username && request.status !== 'Completed') { %>
                                 <tr>
                                     <td><%= request.tenant_username %></td>
@@ -47,13 +47,13 @@
                         <% }) %>
                     </tbody>
                 </table>
-                <% if (!maintenanceRequests.some(req => req.owner_username === user.username && req.status !== 'Completed')) { %>
+                <% if (!ownerRequests.some(req => req.owner_username === user.username && req.status !== 'Completed')) { %>
                     <p>No incoming maintenance requests at this time</p>
                 <% } %>
             </div>
         <% } %>
         
-        <% if (user && user.t_flag) {console.log(maintenanceRequests) %>
+        <% if (user && user.t_flag) { %>
             <div class="tenant-section">
                 <h2>Your Maintenance Requests</h2>
                 
@@ -75,7 +75,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <% maintenanceRequests.forEach(request => { %>
+                        <% tenantRequests.forEach(request => { %>
                             <% if (request.tenant_username === user.username && request.status !== 'Completed') { %>
                                 <tr>
                                     <td><%= request.description %></td>
@@ -98,7 +98,7 @@
                         <% }) %>
                     </tbody>
                 </table>
-                <% if (!maintenanceRequests.some(req => req.tenant_username === user.username && req.status !== 'Completed')) { %>
+                <% if (!tenantRequests.some(req => req.tenant_username === user.username && req.status !== 'Completed')) { %>
                     <p>You do not have any maintenance requests</p>
                 <% } %>
             </div>
@@ -135,4 +135,4 @@
         }
     </style>
 </body>
-</html>
+</html> 

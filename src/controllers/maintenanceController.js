@@ -6,29 +6,25 @@ export const getMaintenanceRequests = async (req, res) => {
     try {
         const user = req.session.user;
 
-        // Check if user is authenticated
         if (!user) {
             return res.status(400).send('User not authenticated');
         }
 
-        let maintenanceRequests = [];
+        let ownerRequests = [];
+        let tenantRequests = [];
 
-        // Fetch maintenance requests based on the user's role (owner/tenant)
         if (user.o_flag) {
-            maintenanceRequests = await Maintenance.find({ owner_username: user.username }).lean();
-        }if (user.t_flag) {
-            maintenanceRequests = await Maintenance.find({ tenant_username: user.username }).lean();
-
+            ownerRequests = await Maintenance.find({ owner_username: user.username }).lean();
         }
 
-        // Ensure maintenanceRequests is always an array
-        if (!Array.isArray(maintenanceRequests)) {
-            maintenanceRequests = [];
+        if (user.t_flag) {
+            tenantRequests = await Maintenance.find({ tenant_username: user.username }).lean();
         }
 
         res.render('maintenanceRequestsPage', { 
-            user, 
-            maintenanceRequests
+            user,
+            ownerRequests,
+            tenantRequests
         });
     } catch (error) {
         console.error('Error fetching maintenance requests:', error);
